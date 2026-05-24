@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>WaldoderWind — Weißt du's wirklich?</title>
+<meta name="description" content="8 Fragen zum Bürgerentscheid über den geplanten Windpark am Lammerskopf in Heidelberg. 12. Juli 2026."/>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+:root {
+  --bg:        #111e1d;
+  --surface:   rgba(46,77,73,0.45);
+  --border:    rgba(154,196,180,0.18);
+  --green:     #8cc4ac;
+  --green-dim: rgba(140,196,172,0.2);
+  --red:       #c98a8a;
+  --red-dim:   rgba(201,138,138,0.2);
+  --text:      #ede8e5;
+  --muted:     rgba(237,232,229,0.55);
+  --radius:    18px;
+}
+
+html, body {
+  height: 100%; width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+}
+
+/* ── BG GLOW ── */
+body::before {
+  content:'';
+  position:fixed; inset:0;
+  background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(77,122,104,0.14), transparent),
+              radial-gradient(ellipse 60% 50% at 80% 110%, rgba(138,108,115,0.10), transparent);
+  pointer-events:none;
+}
+
+/* ── SCREENS ── */
+.screen {
+  position: fixed; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 1.5rem;
+  transition: opacity .35s ease, transform .35s ease;
+}
+.screen.hidden { opacity: 0; pointer-events: none; transform: scale(.97); }
+
+/* ── INTRO ── */
+#intro { text-align: center; }
+.intro-icon { margin-bottom: 1.4rem; }
+.intro-icon img { width: 148px; height: auto; display: block; margin: 0 auto; border-radius: 50%; box-shadow: 0 0 0 3px rgba(140,196,172,0.3), 0 8px 32px rgba(0,0,0,0.35); }
+.intro-tag {
+  display: inline-block;
+  border: 1px solid rgba(140,196,172,0.4);
+  color: var(--green);
+  font-size: .7rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; border-radius: 50px;
+  padding: .3rem 1rem; margin-bottom: 1.2rem;
+}
+#intro h1 {
+  font-size: clamp(1.8rem, 6vw, 2.6rem);
+  font-weight: 900; line-height: 1.15;
+  margin-bottom: .9rem;
+}
+#intro h1 em { color: var(--green); font-style: normal; }
+#intro p {
+  font-size: 1rem; color: var(--muted);
+  max-width: 380px; margin: 0 auto 2rem; line-height: 1.6;
+}
+.date-chip {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: rgba(140,196,172,.12);
+  border: 1px solid rgba(140,196,172,.28);
+  border-radius: 50px; padding: .5rem 1.1rem;
+  font-size: .85rem; font-weight: 600; color: var(--green);
+  margin-bottom: 2rem;
+}
+.start-btn {
+  background: var(--green); color: #111e1d;
+  border: none; border-radius: 50px;
+  padding: 1rem 2.5rem; font-size: 1.05rem; font-weight: 800;
+  cursor: pointer; letter-spacing: .02em;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 0 30px rgba(140,196,172,.3);
+}
+.start-btn:hover { transform: scale(1.04); box-shadow: 0 0 40px rgba(140,196,172,.45); }
+.start-btn:active { transform: scale(.97); }
+.intro-note { margin-top: 1.2rem; font-size: .75rem; color: var(--muted); }
+
+/* ── QUIZ SCREEN ── */
+#quiz {
+  justify-content: flex-start;
+  padding-top: max(2rem, env(safe-area-inset-top));
+  overflow-y: auto;
+}
+
+/* progress */
+.progress-row {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; max-width: 520px; margin-bottom: 1.8rem;
+}
+.progress-dots { display: flex; gap: .45rem; }
+.dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--border); transition: background .3s, transform .3s;
+}
+.dot.done { background: var(--green); }
+.dot.current { background: var(--green); transform: scale(1.4); }
+.progress-label { font-size: .75rem; color: var(--muted); font-weight: 600; }
+
+/* question card */
+.q-card {
+  width: 100%; max-width: 520px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.6rem;
+  backdrop-filter: blur(12px);
+  animation: slideIn .4s cubic-bezier(.22,1,.36,1);
+}
+@keyframes slideIn {
+  from { opacity:0; transform: translateY(28px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+.q-topic {
+  font-size: .7rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--green);
+  margin-bottom: .6rem; display: flex; align-items: center; gap: .4rem;
+}
+.q-text {
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  font-weight: 700; line-height: 1.4;
+  margin-bottom: 1.4rem;
+}
+
+/* options */
+.options { display: flex; flex-direction: column; gap: .7rem; }
+.opt-btn {
+  width: 100%;
+  background: rgba(255,255,255,.05);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: .9rem 1.1rem;
+  text-align: left; cursor: pointer;
+  font-size: .95rem; color: var(--text);
+  display: flex; gap: .8rem; align-items: flex-start;
+  transition: border-color .18s, background .18s, transform .12s;
+  line-height: 1.4;
+}
+.opt-btn:hover:not(:disabled) {
+  border-color: rgba(140,196,172,.4);
+  background: rgba(140,196,172,.08);
+}
+.opt-btn:active:not(:disabled) { transform: scale(.98); }
+.opt-letter {
+  flex-shrink: 0; width: 24px; height: 24px;
+  border-radius: 50%; border: 1.5px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .75rem; font-weight: 700; color: var(--muted);
+  margin-top: .05rem; transition: all .18s;
+}
+.opt-btn.correct {
+  border-color: var(--green);
+  background: var(--green-dim);
+  animation: pulse-green .4s ease;
+}
+.opt-btn.correct .opt-letter {
+  background: var(--green); border-color: var(--green); color: #111e1d;
+}
+.opt-btn.wrong {
+  border-color: var(--red);
+  background: var(--red-dim);
+  animation: shake .4s ease;
+}
+.opt-btn.wrong .opt-letter {
+  background: var(--red); border-color: var(--red); color: #fff;
+}
+@keyframes pulse-green {
+  0%   { box-shadow: 0 0 0 0 rgba(140,196,172,.5); }
+  70%  { box-shadow: 0 0 0 10px rgba(140,196,172,0); }
+  100% { box-shadow: 0 0 0 0 rgba(140,196,172,0); }
+}
+@keyframes shake {
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-6px)}
+  40%{transform:translateX(6px)}
+  60%{transform:translateX(-4px)}
+  80%{transform:translateX(4px)}
+}
+
+/* explanation */
+.explanation {
+  margin-top: 1rem;
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+  font-size: .88rem; line-height: 1.55;
+  display: none;
+  animation: fadeUp .35s ease;
+}
+.explanation.show { display: block; }
+.explanation.ok {
+  background: rgba(140,196,172,.12);
+  border: 1px solid rgba(140,196,172,.28);
+}
+.explanation.no {
+  background: rgba(248,113,113,.08);
+  border: 1px solid rgba(248,113,113,.2);
+}
+.explanation-head {
+  font-weight: 800; margin-bottom: .4rem; font-size: .9rem;
+}
+.explanation.ok .explanation-head { color: var(--green); }
+.explanation.no .explanation-head { color: var(--red); }
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(10px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* next button */
+.next-btn {
+  display: none; width: 100%; max-width: 520px;
+  margin-top: 1rem; margin-bottom: max(1.5rem, env(safe-area-inset-bottom));
+  background: var(--green); color: #111e1d;
+  border: none; border-radius: 50px;
+  padding: 1rem; font-size: 1rem; font-weight: 800;
+  cursor: pointer; letter-spacing: .02em;
+  transition: transform .15s, opacity .2s;
+  box-shadow: 0 4px 20px rgba(140,196,172,.3);
+}
+.next-btn.show { display: block; animation: fadeUp .3s ease; }
+.next-btn:hover { transform: scale(1.02); }
+.next-btn:active { transform: scale(.97); }
+
+/* ── RESULT ── */
+#result { text-align: center; }
+.result-ring {
+  position: relative; width: 140px; height: 140px; margin: 0 auto 1.5rem;
+}
+.result-ring svg { transform: rotate(-90deg); }
+.ring-bg { fill: none; stroke: rgba(255,255,255,.08); stroke-width: 8; }
+.ring-fill { fill: none; stroke: var(--green); stroke-width: 8; stroke-linecap: round;
+  transition: stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1); }
+.result-score-inner {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+.result-num { font-size: 2.6rem; font-weight: 900; line-height: 1; }
+.result-denom { font-size: .85rem; color: var(--muted); }
+#result h2 { font-size: 1.6rem; font-weight: 900; margin-bottom: .6rem; }
+#result .result-msg {
+  font-size: .95rem; color: var(--muted);
+  max-width: 380px; margin: 0 auto 2rem; line-height: 1.6;
+}
+.result-cta {
+  background: rgba(140,196,172,.12);
+  border: 1px solid rgba(140,196,172,.3);
+  border-radius: var(--radius); padding: 1.2rem 1.5rem;
+  max-width: 400px; margin: 0 auto 1.5rem;
+  font-size: .9rem; line-height: 1.5;
+}
+.result-cta strong { color: var(--green); }
+.result-btns { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; }
+.btn-retry {
+  background: rgba(255,255,255,.08); border: 1px solid var(--border);
+  color: var(--text); border-radius: 50px;
+  padding: .8rem 1.8rem; font-size: .9rem; font-weight: 700;
+  cursor: pointer; transition: background .2s;
+}
+.btn-retry:hover { background: rgba(255,255,255,.13); }
+.btn-share {
+  background: var(--green); color: #111e1d;
+  border: none; border-radius: 50px;
+  padding: .8rem 1.8rem; font-size: .9rem; font-weight: 800;
+  cursor: pointer; box-shadow: 0 0 20px rgba(140,196,172,.3);
+  transition: transform .15s;
+}
+.btn-share:hover { transform: scale(1.04); }
+.result-source {
+  margin-top: 1.5rem; font-size: .72rem; color: var(--muted); line-height: 1.6;
+}
+.result-source a { color: rgba(140,196,172,.7); }
+
+/* ── DEEP DIVE ── */
+.deepdive-wrap {
+  width: 100%; max-width: 420px;
+  margin: 1.6rem auto 0;
+  animation: fadeUp .5s ease .2s both;
+}
+.deepdive-separator {
+  display: flex; align-items: center; gap: .8rem;
+  margin-bottom: 1.2rem;
+}
+.deepdive-separator::before,
+.deepdive-separator::after {
+  content:''; flex:1; height:1px;
+  background: rgba(255,255,255,.1);
+}
+.deepdive-separator span {
+  font-size: .72rem; color: var(--muted);
+  white-space: nowrap; letter-spacing: .04em;
+}
+.deepdive-card {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(140,196,172,.22);
+  border-radius: var(--radius);
+  padding: 1.4rem 1.5rem;
+  text-align: left;
+}
+.deepdive-label {
+  font-size: .68rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--green); margin-bottom: .5rem;
+}
+.deepdive-card h3 {
+  font-size: 1rem; font-weight: 800;
+  line-height: 1.35; margin-bottom: .6rem;
+}
+.deepdive-card p {
+  font-size: .85rem; color: var(--muted);
+  line-height: 1.65; margin-bottom: 1.2rem;
+}
+.deepdive-topics {
+  display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1.2rem;
+}
+.deepdive-topic {
+  font-size: .75rem; background: rgba(140,196,172,.12);
+  border: 1px solid rgba(140,196,172,.2);
+  color: var(--green); border-radius: 50px;
+  padding: .2rem .7rem; font-weight: 600;
+}
+.deepdive-btn {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%;
+  background: var(--green); color: #111e1d;
+  border: none; border-radius: 50px;
+  padding: .9rem 1.3rem;
+  font-size: .95rem; font-weight: 800;
+  cursor: pointer; text-decoration: none;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 0 24px rgba(140,196,172,.3);
+}
+.deepdive-btn:hover { transform: scale(1.02); box-shadow: 0 0 36px rgba(140,196,172,.45); }
+.deepdive-btn:active { transform: scale(.98); }
+</style>
+</head>
+<body>
+
+<!-- ══ INTRO ══ -->
+<div class="screen" id="intro">
+  <div class="intro-icon"><img src="logo2weiss.png" alt="WaldoderWind"></div>
+  <div class="intro-tag">Bürgerentscheid · Heidelberg · 12. Juli 2026</div>
+  <h1><em>WaldoderWind</em> —<br/>Weißt du's wirklich?</h1>
+  <p>10 Fragen. 4 Minuten. Alles was du über den Windpark-Bürgerentscheid wissen musst — ohne Vereinfachung.</p>
+  <div class="date-chip">📅 Abstimmung: 12. Juli 2026</div>
+  <button class="start-btn" onclick="startQuiz()">Jetzt starten →</button>
+  <div class="intro-note">Unabhängig · Parteipolitisch nicht gebunden · Keine Cookies</div>
+</div>
+
+<!-- ══ QUIZ ══ -->
+<div class="screen hidden" id="quiz">
+  <div class="progress-row">
+    <div class="progress-dots" id="dots"></div>
+    <div class="progress-label" id="progress-label">Frage 1 von 8</div>
+  </div>
+  <div class="q-card" id="q-card">
+    <div class="q-topic" id="q-topic"></div>
+    <div class="q-text" id="q-text"></div>
+    <div class="options" id="options"></div>
+    <div class="explanation" id="explanation">
+      <div class="explanation-head" id="exp-head"></div>
+      <div id="exp-body"></div>
+    </div>
+  </div>
+  <button class="next-btn" id="next-btn" onclick="nextQuestion()">Weiter →</button>
+</div>
+
+<!-- ══ RESULT ══ -->
+<div class="screen hidden" id="result" style="overflow-y:auto; justify-content:flex-start; padding-top:2rem; padding-bottom:2rem;">
+  <div class="result-ring">
+    <svg viewBox="0 0 140 140" width="140" height="140">
+      <circle class="ring-bg" cx="70" cy="70" r="58"/>
+      <circle class="ring-fill" id="ring-fill" cx="70" cy="70" r="58"
+        stroke-dasharray="364.4" stroke-dashoffset="364.4"/>
+    </svg>
+    <div class="result-score-inner">
+      <span class="result-num" id="result-num">0</span>
+      <span class="result-denom" id="result-denom">von 8</span>
+    </div>
+  </div>
+  <h2 id="result-title"></h2>
+  <p class="result-msg" id="result-msg"></p>
+  <div class="result-cta">
+    <strong>📅 12. Juli 2026 — Bürgerentscheid in Heidelberg</strong><br/>
+    Abstimmberechtigt sind alle Heidelbergerinnen und Heidelberger ab 16 Jahren — auch EU-Bürger mit Hauptwohnsitz HD. Deine Stimme zählt.
+  </div>
+  <div class="result-btns">
+    <button class="btn-retry" onclick="restart()">↺ Nochmal</button>
+    <button class="btn-share" onclick="shareQuiz()">Teilen ↗</button>
+  </div>
+  <div class="result-source">
+    Quellen: <a href="https://www.heidelberg.de/HD/entwickeln/haeufige+fragen+_+antworten.html" target="_blank">Stadt Heidelberg</a> ·
+    <a href="https://www.bund-heidelberg.de/klimaschutz/windkraft-in-heidelberg/" target="_blank">BUND Heidelberg</a> ·
+    <a href="https://heg.solar/windpark-lammerskopf/" target="_blank">Heidelberger Energiegenossenschaft</a>
+  </div>
+
+  <!-- DEEP DIVE BRIDGE -->
+  <div class="deepdive-wrap">
+    <div class="deepdive-separator"><span>Das war ganz schön viel auf einmal</span></div>
+    <div class="deepdive-card">
+      <div class="deepdive-label">📖 Noch mehr wissen?</div>
+      <h3>Das Thema hat viele Schichten — hier findest du alles in Ruhe erklärt.</h3>
+      <p>Das Quiz hat die wichtigsten Punkte angerissen. Aber Planungsrecht, Naturschutz, Wirtschaftsinteressen und Alternativstandorte verdienen mehr Platz als acht Fragen erlauben. Auf der Übersichtsseite findest du alle Themen noch einmal — klar strukturiert, mit Chronologie, den stärksten Argumenten beider Seiten und allen Quellen.</p>
+      <div class="deepdive-topics">
+        <span class="deepdive-topic">🗺 Chronologie</span>
+        <span class="deepdive-topic">⚖️ Pro &amp; Contra</span>
+        <span class="deepdive-topic">🦇 Naturschutz</span>
+        <span class="deepdive-topic">💶 Wer profitiert?</span>
+        <span class="deepdive-topic">🗳 Abstimmen</span>
+      </div>
+      <a class="deepdive-btn" href="index.html">
+        Zur vollständigen Übersicht
+        <span>→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = [
+  {
+    topic: '🗺 Planungsrecht',
+    q: 'Wurde der Lammerskopf offiziell in den Regionalplan für Windenergie der Metropolregion aufgenommen?',
+    opts: [
+      'Ja — er ist als Vorranggebiet ausgewiesen',
+      'Nein — er wurde Ende 2025 aus dem Regionalplan gestrichen',
+      'Das Verfahren ist noch offen und läuft'
+    ],
+    correct: 1,
+    head_ok: '✓ Richtig.',
+    head_no: '✗ Falsch.',
+    explain: 'Im Dezember 2025 strich die Verbandsversammlung der Metropolregion Rhein-Neckar den Lammerskopf aus dem Teilregionalplan Windenergie. Die Stadt Heidelberg versucht nun einen kommunalen Umweg über einen Bebauungsplan — ein ungewöhnlicher und rechtlich unsicherer Schritt.'
+  },
+  {
+    topic: '🦇 Naturschutz',
+    q: 'Welchen besonderen Schutzstatus hat der Wald am Lammerskopf?',
+    opts: [
+      'Normaler Wirtschaftswald — ohne besondere Auflagen',
+      'Landschaftsschutzgebiet ohne EU-Bindung',
+      'FFH-Gebiet (Natura 2000) — EU-Schutzrecht mit strengem Verschlechterungsverbot'
+    ],
+    correct: 2,
+    head_ok: '✓ Richtig.',
+    head_no: '✗ Falsch.',
+    explain: 'Das Plangebiet liegt fast vollständig in einem FFH-Schutzgebiet — Teil des europäischen Natura 2000-Netzes. Die EU-Richtlinie verbietet jede Verschlechterung der Schutzziele. Eingriffe sind nur unter sehr strengen Auflagen genehmigungsfähig — und die Rechtssicherheit des vorliegenden Gutachtens ist laut BUND und NABU fraglich.'
+  },
+  {
+    topic: '🐾 Tierarten',
+    q: 'Welche seltenen Tiere leben nachweislich im Plangebiet am Lammerskopf?',
+    opts: [
+      'Vor allem gewöhnliches Rehwild und Wildschweine',
+      'Mopsfledermaus, Bechsteinfledermaus und weitere windkraftsensible Arten',
+      'Keine besonders geschützten Arten — das Gebiet ist ökologisch wenig wertvoll'
+    ],
+    correct: 1,
+    head_ok: '✓ Richtig.',
+    head_no: '✗ Falsch.',
+    explain: '11 Fledermausarten wurden dokumentiert — darunter Mops- und Bechsteinfledermaus. Beide sind EU-Verantwortungsarten, für die Deutschland besondere Schutzpflichten hat. Sie nutzen den alten Baumbestand als Sommer- und teils Winterquartier. Rodungen für Anlagen und Zuwegungen würden diese Quartiere direkt gefährden.'
+  },
+  {
+    topic: '💶 Interessen',
+    q: 'Wer steckt hinter dem geplanten Windpark — und wer profitiert finanziell?',
+    opts: [
+      'Ein überregionaler Energiekonzern ohne Bezug zu Heidelberg',
+      'Eine rein gemeinnützige Initiative ohne wirtschaftliche Interessen',
+      'Ein Konsortium u.a. mit den Stadtwerken Heidelberg — einem Unternehmen im Besitz der Stadt'
+    ],
+    correct: 2,
+    head_ok: '✓ Richtig.',
+    head_no: '✗ Falsch.',
+    explain: 'Die Stadtwerke Heidelberg sind Co-Investor im Projekt. Als stadteigenes Unternehmen fließen Gewinne aus 20+ Jahren Energieverkauf indirekt in die Stadtkasse. Das ist ein legitimes wirtschaftliches Interesse — neben echten Klimaschutzzielen. Aber: Die Stadt hat eine doppelte Rolle als Planungsbehörde und Mitprofiteur. Das sollte man wissen.'
+  },
+  {
+    topic: '🗺 Alternativen',
+    q: 'Gibt es in Baden-Württemberg geeignetere Standorte für Windkraft als den Lammerskopf?',
+    opts: [
+      'Nein — der Lammerskopf ist der einzig realistische Standort in der Region',
+      'Ja — laut BUND-Studie haben 3,3 % der BW-Landesfläche gutes Windpotenzial bei deutlich geringerem Artenschutzkonflikt',
+      'Das ist noch nicht untersucht worden'
+    ],
+    correct: 1,
+    head_ok: '✓ Richtig.',
+    head_no: '✗ Falsch.',
+    explain: 'Eine Studie des BUND beim Öko-Institut Freiburg zeigt: In Baden-Württemberg gibt es ausreichend Flächen mit gutem Wind und erheblich geringerem Naturschutzkonflikt — vor allem im östlichen Rhein-Neckar-Kreis und anderen Regionen. Der Lammerskopf liegt in Konflikt-Kategorie B (hochwertige Schutzgebiete). Das Argument "alternativlos" stimmt so nicht.'
+  },
+  {
+    topic: '🌲 Infrastruktur',
+    q: 'Was passiert mit den breiten Baustraßen für die Windräder nach Abschluss der Bauarbeiten?',
+    opts: [
+      'Sie werden vollständig rückgebaut und wieder bepflanzt',
+      'Sie bleiben als permanente Wartungswege im Wald erhalten',
+      'Das ist noch nicht entschieden und hängt vom Genehmigungsverfahren ab'
+    ],
+    correct: 1,
+    head_ok: '✓ Richtig.',
+    head_no: '✗ Falsch.',
+    explain: 'Windkraftanlagen brauchen dauerhaften Fahrzeugzugang für Wartung und Notfälle. Die Zuwegungen bleiben als permanente Infrastruktur erhalten — der Waldkorridor wird nicht wiederhergestellt. Das ist ein irreversibler Eingriff. Bezeichnend: Die ungelöste Zuwegungsfrage war sogar das offizielle Hauptargument für die Streichung aus dem Regionalplan.'
+  },
+  {
+    topic: '🗳 Abstimmung',
+    q: 'Was passiert konkret, wenn am 12. Juli die Mehrheit mit Nein stimmt?',
+    opts: [
+      'Das Projekt ist dauerhaft und unwiderruflich gestoppt',
+      'Das Projekt ist für mindestens 3 Jahre gestoppt — dann kann neu abgestimmt werden',
+      'Der Gemeinderat kann das Ergebnis übergehen und trotzdem weitermachen'
+    ],
+    correct: 1,
+    head_ok: '✓ Richtig.',
+    head_no: '✗ Falsch.',
+    explain: 'Ein erfolgreicher Bürgerentscheid hat die rechtliche Kraft eines Gemeinderatsbeschlusses und kann innerhalb von 3 Jahren nur durch einen neuen Bürgerentscheid geändert werden. Ein Nein stoppt den Prozess für mindestens drei Jahre — kein ewiges Ende, aber ein echter und bindender Aufschub.'
+  },
+  {
+    topic: '📏 Anlagenhöhe',
+    q: 'Warum sind die geplanten Windräder am Lammerskopf bis zu 250 Meter hoch?',
+    opts: [
+      'Weil gesetzliche Mindestanforderungen für Waldstandorte diese Höhe vorschreiben',
+      'Weil neuere Anlagen generell immer größer gebaut werden — unabhängig vom Standort',
+      'Weil der Wind am Lammerskopf erst in großen Höhen ausreichend stark ist — der Odenwald gilt als Schwachwindzone'
+    ],
+    correct: 2,
+    head_ok: '✓ Richtig.',
+    head_no: '✗ Falsch.',
+    explain: 'Der Odenwald gilt als Schwachwindzone. In niedrigeren Lagen weht zu wenig Wind für wirtschaftlichen Betrieb. Erst in 175 Metern Höhe wurden 6,4 m/s gemessen — die Untergrenze der Wirtschaftlichkeit. Je höher die Anlage, desto sichtbarer. Die extreme Bauhöhe ist also eine direkte Folge des ungünstigen Standorts — nicht eines generellen technischen Trends.'
+  },
+  {
+    topic: '🗺 Weitere Standorte',
+    q: 'Ist der Lammerskopf das einzige Waldgebiet rund um Heidelberg, das für Windkraft geplant ist?',
+    opts: [
+      'Ja — der Lammerskopf ist das einzige Plangebiet in der Region',
+      'Nein — auch Weißer Stein und Hoher Nistler im Heidelberger Stadtwald sind auf der Planungsliste',
+      'Nein — geplant ist vor allem die Rheinebene bei Mannheim, nicht der Wald'
+    ],
+    correct: 1,
+    head_ok: '✓ Richtig.',
+    head_no: '✗ Falsch.',
+    explain: 'Parallel zum Lammerskopf stehen auch der Weiße Stein und der Hohe Nistler im Heidelberger Stadtwald auf der Planungsliste — weitere bis zu 9 Anlagen. Auch dort gibt es erhebliche Konflikte mit dem Artenschutz. Das macht deutlich: Der Bürgerentscheid am 12. Juli ist nur eine von mehreren Entscheidungen, die das Waldgebiet rund um Heidelberg in den nächsten Jahren betreffen werden.'
+  },
+  {
+    topic: '⚖️ Quorum',
+    q: 'Wann gilt der Bürgerentscheid überhaupt als wirksam?',
+    opts: [
+      'Sobald mehr Ja als Nein stimmen — wie bei jeder normalen Wahl',
+      'Wenn mindestens 50 % der Stimmberechtigten abstimmen',
+      'Wenn mindestens 20 % aller Stimmberechtigten mit der Mehrheit übereinstimmen'
+    ],
+    correct: 2,
+    head_ok: '✓ Richtig.',
+    head_no: '✗ Falsch.',
+    explain: 'Heidelberg hat rund 110.000 Stimmberechtigte. Das Quorum bedeutet: Mindestens ca. 22.000 Menschen müssen auf der Seite der Mehrheit stehen. Ist die Beteiligung zu gering, entscheidet am Ende wieder der Gemeinderat — egal was die Abstimmenden gewollt haben. Wählen gehen ist also doppelt wichtig.'
+  }
+];
+
+let current = 0, score = 0, answered = false;
+
+function $(id){ return document.getElementById(id); }
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => {
+    s.classList.toggle('hidden', s.id !== id);
+  });
+}
+
+function startQuiz() {
+  current = 0; score = 0; answered = false;
+  buildDots();
+  renderQuestion();
+  showScreen('quiz');
+}
+
+function buildDots() {
+  const d = $('dots'); d.innerHTML = '';
+  QUESTIONS.forEach((_,i) => {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i===0?' current':'');
+    dot.id = 'dot-'+i;
+    d.appendChild(dot);
+  });
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[current];
+  $('q-topic').innerHTML = q.topic;
+  $('q-text').textContent = q.q;
+  $('progress-label').textContent = `Frage ${current+1} von ${QUESTIONS.length}`;
+  $('explanation').className = 'explanation';
+  $('next-btn').className = 'next-btn';
+  answered = false;
+
+  // animate card
+  const card = $('q-card');
+  card.style.animation = 'none';
+  void card.offsetWidth;
+  card.style.animation = '';
+
+  // render options
+  const letters = ['A','B','C'];
+  const opts = $('options');
+  opts.innerHTML = '';
+  q.opts.forEach((txt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.innerHTML = `<span class="opt-letter">${letters[i]}</span><span>${txt}</span>`;
+    btn.onclick = () => selectAnswer(i);
+    opts.appendChild(btn);
+  });
+
+  // update dots
+  for(let i=0;i<QUESTIONS.length;i++){
+    const dot = $('dot-'+i);
+    dot.className = 'dot' + (i<current?' done':(i===current?' current':''));
+  }
+}
+
+function selectAnswer(idx) {
+  if (answered) return;
+  answered = true;
+  const q = QUESTIONS[current];
+  const btns = $('options').querySelectorAll('.opt-btn');
+  btns.forEach(b => b.disabled = true);
+
+  const isCorrect = idx === q.correct;
+  if (isCorrect) score++;
+
+  btns[idx].classList.add(isCorrect ? 'correct' : 'wrong');
+  if (!isCorrect) btns[q.correct].classList.add('correct');
+
+  const exp = $('explanation');
+  $('exp-head').textContent = isCorrect ? q.head_ok : q.head_no;
+  $('exp-body').textContent = q.explain;
+  exp.className = `explanation show ${isCorrect?'ok':'no'}`;
+
+  const nxt = $('next-btn');
+  nxt.textContent = current < QUESTIONS.length-1 ? 'Weiter →' : 'Ergebnis ansehen →';
+  nxt.className = 'next-btn show';
+
+  // scroll to show explanation
+  setTimeout(() => exp.scrollIntoView({behavior:'smooth', block:'nearest'}), 100);
+}
+
+function nextQuestion() {
+  current++;
+  if (current >= QUESTIONS.length) {
+    showResult();
+  } else {
+    $('quiz').scrollTo({top:0, behavior:'smooth'});
+    setTimeout(renderQuestion, 50);
+  }
+}
+
+function showResult() {
+  showScreen('result');
+
+  const pct = score / QUESTIONS.length;
+  const circ = 364.4;
+  const fill = $('ring-fill');
+  fill.style.strokeDashoffset = circ;
+
+  setTimeout(() => {
+    fill.style.strokeDashoffset = circ * (1 - pct);
+  }, 100);
+
+  $('result-num').textContent = score;
+  $('result-denom').textContent = `von ${QUESTIONS.length}`;
+
+  const levels = [
+    { min:0, max:3, title:'Noch viel zu lernen', msg:'Das Thema ist wirklich komplex — du hast jetzt aber schon mehr gewusst als vorher. Teile das Quiz mit Freunden in Heidelberg!' },
+    { min:4, max:5, title:'Ganz gut informiert', msg:'Du kennst das Wesentliche. Ein paar Details sind noch offen — Grund genug, nochmal in Ruhe durch die Fragen zu gehen.' },
+    { min:6, max:7, title:'Sehr gut informiert!', msg:'Du verstehst das Thema von mehreren Seiten. Genau das braucht es für eine bewusste Entscheidung am 12. Juli.' },
+    { min:8, max:8, title:'Bestens vorbereitet!', msg:'Alle Antworten korrekt — du kennst das Thema wirklich gut. Am 12. Juli weißt du genau, worum es geht.' }
+  ];
+  const l = levels.find(x => score>=x.min && score<=x.max);
+  $('result-title').textContent = l.title;
+  $('result-msg').textContent = l.msg;
+}
+
+function restart() {
+  current = 0; score = 0; answered = false;
+  buildDots();
+  renderQuestion();
+  $('quiz').scrollTo({top:0});
+  showScreen('quiz');
+}
+
+function shareQuiz() {
+  const text = `Ich habe ${score}/8 Fragen beim WaldoderWind-Quiz richtig. Weißt du mehr? Abstimmung: 12. Juli 2026`;
+  if (navigator.share) {
+    navigator.share({ title: 'Lammerskopf-Quiz', text, url: location.href }).catch(()=>{});
+  } else {
+    navigator.clipboard.writeText(text + '\n' + location.href)
+      .then(() => alert('Link kopiert! Teile ihn in WhatsApp oder Instagram.'))
+      .catch(() => alert('Teilen nicht möglich — kopiere die URL manuell.'));
+  }
+}
+</script>
+</body>
+</html>

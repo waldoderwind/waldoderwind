@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WaldoderWind — Bürgerentscheid Lammerskopf | 12. Juli 2026</title>
+  <meta name="description" content="WaldoderWind — Alles zum Bürgerentscheid über den Windpark Lammerskopf in Heidelberg am 12. Juli 2026. Sachlich, vollständig, unabhängig."/>
+  <style>
+    :root {
+      --ink:        #2e4d49;
+      --ink-mid:    #4d7a68;
+      --ink-light:  #8a6c73;
+      --paper:      #faf8f6;
+      --paper-warm: #f2ebe8;
+      --rule:       #ddd0ca;
+      --green:      #4d7a68;
+      --green-mid:  #5e8c7a;
+      --green-pale: #e4efeb;
+      --accent:     #c9a9a9;
+      --surface:    #ffffff;
+      --dark-panel: #2e4d49;
+      --radius:     10px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.7;
+      font-size: 17px;
+    }
+
+    /* ── MASTHEAD ── */
+    .masthead {
+      background: var(--dark-panel);
+      color: #fff;
+      text-align: center;
+      padding: .6rem 1rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .72rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .masthead a { color: rgba(255,255,255,.6); text-decoration: none; margin: 0 .8rem; }
+    .masthead a:hover { color: #fff; }
+
+    /* ── NAV ── */
+    nav {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--rule);
+      position: sticky; top: 0; z-index: 100;
+      transition: box-shadow .2s;
+    }
+    nav.scrolled {
+      box-shadow: 0 4px 24px rgba(24,46,43,0.10);
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .5rem 1.5rem;
+      gap: 1rem;
+    }
+    .nav-title {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .9rem; font-weight: 800;
+      color: var(--ink); text-decoration: none;
+      letter-spacing: -.01em; white-space: nowrap;
+      display: flex; align-items: center; gap: .55rem;
+    }
+    .nav-title .nav-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green); flex-shrink: 0;
+      box-shadow: 0 0 0 3px var(--green-pale);
+    }
+    .nav-title span { color: var(--ink-mid); font-weight: 600; }
+    .nav-logo {
+      height: 68px; width: auto; display: block;
+      mix-blend-mode: multiply;
+    }
+    .nav-links {
+      display: flex; gap: .25rem; list-style: none;
+      align-items: center;
+    }
+    .nav-links li a {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .75rem; font-weight: 600; letter-spacing: .03em;
+      color: var(--ink-mid); text-decoration: none;
+      padding: .38rem .75rem; border-radius: 100px;
+      transition: background .15s, color .15s;
+      white-space: nowrap;
+    }
+    .nav-links li a:hover {
+      background: var(--paper-warm); color: var(--ink);
+    }
+    .nav-links li a.nav-cta {
+      background: var(--green); color: #fff;
+      font-weight: 700; letter-spacing: .04em;
+      padding: .42rem 1rem;
+      box-shadow: 0 2px 8px rgba(77,122,104,0.28);
+    }
+    .nav-links li a.nav-cta:hover {
+      background: #3a6356; box-shadow: 0 3px 14px rgba(77,122,104,0.4);
+    }
+    @media (max-width: 860px) {
+      .nav-links li:not(:last-child):not(:nth-last-child(2)) { display: none; }
+    }
+    @media (max-width: 640px) { .nav-links { display: none; } }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--dark-panel);
+      background-image: url('bild-panorama.jpg');
+      background-size: cover;
+      background-position: center 40%;
+      color: #fff;
+      padding: 5rem 1.5rem 4.5rem;
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(24,46,43,0.45) 0%,
+        rgba(24,46,43,0.22) 45%,
+        rgba(24,46,43,0.68) 100%
+      );
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; z-index: 1; }
+    .hero-inner { max-width: 820px; margin: 0 auto; }
+    .hero-kicker {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .72rem; font-weight: 700; letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #9ac4b4;
+      margin-bottom: 1rem;
+      display: flex; align-items: center; gap: .7rem;
+    }
+    .hero-kicker::before {
+      content: ''; display: inline-block;
+      width: 28px; height: 2px; background: #9ac4b4;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5.5vw, 3.8rem);
+      line-height: 1.1; font-weight: 700;
+      margin-bottom: 1.2rem;
+      letter-spacing: -.02em;
+    }
+    .hero-deck {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: rgba(255,255,255,.75);
+      max-width: 640px; line-height: 1.55;
+      margin-bottom: 2rem;
+    }
+    .hero-meta {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 1.2rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .8rem; color: rgba(255,255,255,.5);
+    }
+    .hero-meta strong { color: rgba(255,255,255,.9); }
+    .vote-badge {
+      background: var(--green);
+      color: #fff; border-radius: 100px;
+      padding: .35rem 1rem;
+      font-weight: 700; font-size: .78rem;
+      letter-spacing: .04em;
+    }
+
+    /* ── LAYOUT ── */
+    .page { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* ── SECTION HEADERS ── */
+    .section-head {
+      border-top: none;
+      padding-top: 0;
+      margin-bottom: 2rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .section-head h2 {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .68rem; font-weight: 800; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--ink-mid);
+      white-space: nowrap; padding-right: .25rem;
+    }
+    .section-head .rule { flex: 1; height: 1px; background: var(--rule); }
+
+    /* ── STATS STRIP ── */
+    .stats-strip {
+      background: var(--dark-panel);
+      padding: 2.8rem 1.5rem;
+      margin: 0;
+    }
+    .stats-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+    }
+    .stat {
+      text-align: center; padding: 1.2rem 1rem;
+      border-right: 1px solid rgba(255,255,255,.1);
+      color: #fff;
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+      font-weight: 700; line-height: 1;
+      color: #9ac4b4; font-family: Georgia, serif;
+    }
+    .stat-unit { font-size: .85rem; color: #9ac4b4; }
+    .stat-label {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .72rem; color: rgba(255,255,255,.55);
+      margin-top: .4rem; line-height: 1.4;
+    }
+    /* Tablet: 3 + 2 layout */
+    @media (max-width: 700px) {
+      .stats-inner { grid-template-columns: repeat(3, 1fr); }
+      .stat { border-right: 1px solid rgba(255,255,255,.1); border-bottom: none; }
+      .stat:nth-child(3n) { border-right: none; }
+      .stat:nth-child(4),
+      .stat:nth-child(5) { border-top: 1px solid rgba(255,255,255,.1); }
+      .stat:nth-child(4) { border-right: 1px solid rgba(255,255,255,.1); }
+      .stat:nth-child(5) { border-right: none; }
+    }
+    /* Mobile: 2 + 2 + 1 layout */
+    @media (max-width: 420px) {
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+      .stat { border-right: 1px solid rgba(255,255,255,.1); }
+      .stat:nth-child(2n) { border-right: none; }
+      .stat:nth-child(3),
+      .stat:nth-child(4),
+      .stat:nth-child(5) { border-top: 1px solid rgba(255,255,255,.1); }
+      .stat:nth-child(5) { grid-column: 1 / -1; border-right: none; border-top: 1px solid rgba(255,255,255,.1); }
+    }
+
+    /* ── REFERENDUM BOX ── */
+    .ref-section { padding: 3.5rem 0; }
+    .ref-box {
+      background: var(--surface);
+      border: none;
+      border-radius: 16px;
+      border-left: 4px solid var(--green);
+      box-shadow: 0 2px 20px rgba(24,46,43,0.08);
+      padding: 2rem 2.5rem;
+      max-width: 760px;
+    }
+    .ref-label {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .7rem; font-weight: 800; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--green);
+      margin-bottom: .8rem;
+    }
+    .ref-question {
+      font-size: 1.35rem; font-weight: 700; line-height: 1.4;
+      margin-bottom: 1.2rem; font-style: italic;
+    }
+    .ref-note {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .85rem; color: var(--ink-mid); line-height: 1.6;
+      padding-top: 1rem; border-top: 1px solid var(--rule);
+    }
+    .ref-chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .9rem; }
+    .chip {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .75rem; font-weight: 600;
+      background: var(--green-pale); color: var(--green);
+      border-radius: var(--radius); padding: .3rem .8rem;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline-section { padding: 3.5rem 1.5rem; background: var(--paper-warm); }
+    .tl-grid { max-width: 1100px; margin: 0 auto; }
+    .tl-items { display: grid; grid-template-columns: 1fr; gap: 0; max-width: 760px; }
+    .tl-item {
+      display: grid; grid-template-columns: 90px 1fr;
+      gap: 1.5rem; padding: 1.4rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .tl-item:last-child { border-bottom: none; }
+    .tl-date {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .72rem; font-weight: 800; letter-spacing: .04em;
+      color: var(--green); padding-top: .2rem; text-transform: uppercase;
+    }
+    .tl-title { font-weight: 700; margin-bottom: .3rem; font-size: 1rem; }
+    .tl-text {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .87rem; color: var(--ink-mid); line-height: 1.6;
+    }
+    .tl-item.highlight .tl-date { color: var(--accent); }
+    .tl-item.highlight .tl-title { color: var(--accent); }
+
+    /* ── ARGUMENTS ── */
+    .args-section { padding: 3.5rem 0; }
+    .args-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2.5rem; max-width: 1000px;
+    }
+    @media (max-width: 680px) { .args-grid { grid-template-columns: 1fr; } }
+    .arg-col-label {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .7rem; font-weight: 800; letter-spacing: .12em;
+      text-transform: uppercase; margin-bottom: 1.2rem;
+      padding-bottom: .6rem; border-bottom: 2px solid;
+    }
+    .arg-col-label.pro { color: var(--green); border-color: var(--green); }
+    .arg-col-label.contra { color: #8a6c73; border-color: #8a6c73; }
+    .arg-item { margin-bottom: 1.6rem; padding-top: .1rem; }
+    .arg-title {
+      font-weight: 700; font-size: .95rem;
+      margin-bottom: .3rem;
+    }
+    .arg-text {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .85rem; color: var(--ink-mid); line-height: 1.65;
+    }
+
+    /* ── PULL QUOTE ── */
+    .pullquote {
+      background: var(--green);
+      color: #fff;
+      padding: 3.5rem 1.5rem;
+      text-align: center;
+      margin: 0;
+    }
+    .pullquote blockquote {
+      max-width: 700px; margin: 0 auto;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      line-height: 1.45; font-style: italic;
+      margin-bottom: 1rem;
+    }
+    .pullquote cite {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .8rem; font-style: normal;
+      color: rgba(255,255,255,.65); letter-spacing: .05em;
+    }
+
+    /* ── CONTEXT PANEL ── */
+    .context-section { padding: 3.5rem 0; }
+    .context-grid {
+      display: grid; grid-template-columns: 2fr 1fr; gap: 3rem;
+      max-width: 1000px;
+    }
+    @media (max-width: 720px) { .context-grid { grid-template-columns: 1fr; } }
+    .context-body p { margin-bottom: 1.1rem; font-size: 1rem; }
+    .context-body h3 { font-size: 1.1rem; margin: 1.5rem 0 .5rem; }
+    .sidebar-box {
+      background: var(--surface); border: 1px solid var(--rule);
+      padding: 1.5rem; height: fit-content;
+    }
+    .sidebar-title {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .7rem; font-weight: 800; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--ink-mid);
+      border-bottom: 2px solid var(--rule); padding-bottom: .5rem;
+      margin-bottom: 1rem;
+    }
+    .sidebar-item { margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--rule); }
+    .sidebar-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .sidebar-label {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .7rem; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--green);
+      margin-bottom: .2rem;
+    }
+    .sidebar-text {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .85rem; color: var(--ink-mid); line-height: 1.5;
+    }
+
+    /* ── CTA STRIP ── */
+    .cta-strip {
+      background: var(--paper-warm);
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: 3.5rem 1.5rem;
+      text-align: center;
+    }
+    .cta-strip h2 {
+      font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+      margin-bottom: .6rem; letter-spacing: -.01em;
+    }
+    .cta-strip p {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .95rem; color: var(--ink-mid);
+      max-width: 540px; margin: 0 auto 1.8rem;
+    }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--green); color: #fff;
+      border: none; border-radius: 100px;
+      padding: .85rem 2.2rem; font-size: .92rem; font-weight: 700;
+      cursor: pointer; text-decoration: none;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      transition: all .2s; box-shadow: 0 2px 12px rgba(30,140,88,0.28);
+    }
+    .btn-primary:hover { background: #166e44; box-shadow: 0 4px 18px rgba(30,140,88,0.38); }
+    .btn-secondary {
+      background: transparent; color: var(--ink);
+      border: 1.5px solid var(--rule); border-radius: 100px;
+      padding: .85rem 2.2rem; font-size: .92rem; font-weight: 700;
+      cursor: pointer; text-decoration: none;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      transition: all .2s;
+    }
+    .btn-secondary:hover { background: var(--paper-warm); border-color: var(--ink-mid); }
+
+    /* ── SOURCES ── */
+    .sources-section {
+      padding: 3rem 0;
+      border-top: 1px solid var(--rule);
+    }
+    .sources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: .5rem; max-width: 1000px;
+    }
+    .source-item {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .78rem; color: var(--ink-light);
+    }
+    .source-item a { color: var(--green-mid); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink); color: rgba(255,255,255,.5);
+      padding: 2rem 1.5rem; text-align: center;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .78rem; line-height: 1.8;
+    }
+    footer strong { color: rgba(255,255,255,.85); }
+
+    /* ── AMORTISATION ── */
+    .amort-section { padding: 3.5rem 0; background: var(--surface); }
+    .amort-intro {
+      font-size: 1rem; max-width: 700px;
+      color: var(--ink-mid);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      margin-bottom: 2.2rem; line-height: 1.6;
+    }
+    .amort-timeline { margin: 0 0 2.2rem; }
+    .timeline-bar {
+      display: flex; height: 32px;
+      border-radius: var(--radius); overflow: hidden; width: 100%;
+    }
+    .tl-seg {
+      display: flex; align-items: center; justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .62rem; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: #fff; white-space: nowrap; overflow: hidden;
+    }
+    .tl-seg.build  { background: #8a6c73; flex: 0 0 5%; min-width: 28px; }
+    .tl-seg.payoff { background: #b9a08c; flex: 0 0 7%; min-width: 40px; }
+    .tl-seg.clean  { background: var(--green-mid); flex: 1; }
+    .tl-seg.decom  { background: #c9a9a9; flex: 0 0 3%; min-width: 22px; }
+    .tl-legend {
+      display: flex; gap: 1.5rem; flex-wrap: wrap;
+      margin-top: .8rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .72rem; color: var(--ink-mid);
+    }
+    .tl-legend span { display: flex; align-items: center; gap: .35rem; }
+    .tl-legend .dot {
+      width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0;
+    }
+    .amort-stats {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    @media (max-width: 800px) { .amort-stats { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 440px) { .amort-stats { grid-template-columns: 1fr 1fr; } }
+    .amort-stat {
+      background: var(--paper);
+      border: none;
+      border-radius: 14px;
+      box-shadow: 0 1px 0 var(--rule), 0 2px 12px rgba(24,46,43,0.05);
+      padding: 1.3rem 1rem; text-align: center;
+    }
+    .amort-stat .a-num {
+      font-family: Georgia, serif;
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: 700; color: var(--green); line-height: 1.1;
+    }
+    .amort-stat .a-label {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .72rem; color: var(--ink-mid);
+      margin-top: .35rem; line-height: 1.4;
+    }
+    .amort-callout {
+      background: #f9f4ef;
+      border-left: 3px solid #b9a08c;
+      padding: 1rem 1.3rem;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .85rem; color: var(--ink); line-height: 1.55;
+      margin-bottom: 1rem;
+    }
+    .amort-callout strong { color: #92400e; }
+    .amort-source {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .7rem; color: var(--ink-light);
+    }
+
+    /* ── VISUALISIERUNG ── */
+    .viz-section { padding: 3.5rem 0; }
+    .viz-illustration { margin-bottom: 2rem; }
+    .viz-cap {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .72rem; color: var(--ink-light);
+      margin-top: .6rem; line-height: 1.5;
+      max-width: 720px;
+    }
+    .viz-cap strong { color: var(--ink-mid); }
+    .viz-grid {
+      display: grid; grid-template-columns: 1.4fr 1fr; gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    @media (max-width: 700px) { .viz-grid { grid-template-columns: 1fr; } }
+    .viz-map-wrap {
+      border: 1px solid var(--rule); border-radius: var(--radius); overflow: hidden;
+    }
+    .viz-map-wrap iframe { display: block; width: 100%; height: 280px; border: none; }
+    .viz-map-label {
+      background: var(--paper-warm);
+      padding: .6rem 1rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .72rem; color: var(--ink-mid); font-weight: 600;
+    }
+    .viz-compare {
+      border: 1px solid var(--rule); border-radius: var(--radius);
+      background: var(--surface); padding: 1.2rem 1.2rem .8rem;
+    }
+    .viz-compare-title {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .72rem; font-weight: 700; color: var(--ink-mid);
+      text-transform: uppercase; letter-spacing: .08em; margin-bottom: 1rem;
+    }
+    .compare-bars { display: flex; align-items: flex-end; gap: .8rem; height: 220px; }
+    .cbar {
+      display: flex; flex-direction: column; align-items: center; flex: 1; height: 100%;
+    }
+    .cbar-fill {
+      width: 100%; border-radius: 2px 2px 0 0;
+      display: flex; align-items: flex-start; justify-content: center;
+      padding-top: 6px;
+    }
+    .cbar-val {
+      font-family: -apple-system, sans-serif; font-size: .65rem;
+      font-weight: 700; color: #fff; opacity: .9;
+    }
+    .cbar-name {
+      font-family: -apple-system, sans-serif; font-size: .65rem;
+      color: var(--ink-mid); text-align: center; margin-top: .4rem;
+      line-height: 1.3;
+    }
+
+
+    /* ── FAKTENCHECK BADGES ── */
+    .fact-badge {
+      display: inline-block;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .62rem; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      border-radius: 100px; padding: .22rem .7rem;
+      margin-bottom: .55rem;
+    }
+    .fact-badge.confirmed { background: var(--green-pale); color: var(--green); }
+    .fact-badge.disputed  { background: #f5edef; color: #8a6c73; }
+    .fact-badge.misleading { background: #fde8e8; color: #9a2020; }
+
+    /* ── HAMBURGER MOBILE NAV ── */
+    .nav-burger {
+      display: none; background: none; border: none;
+      cursor: pointer; padding: .4rem .5rem; border-radius: 8px;
+      font-size: 1.3rem; color: var(--ink-mid); line-height: 1;
+      transition: background .15s;
+    }
+    .nav-burger:hover { background: var(--paper-warm); }
+    @media (max-width: 640px) {
+      .nav-burger { display: flex; align-items: center; }
+    }
+    .mobile-menu {
+      display: none; position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--surface); z-index: 200;
+      flex-direction: column; padding: 2rem 1.5rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu-close {
+      align-self: flex-end; background: none; border: none;
+      font-size: 1.6rem; cursor: pointer; color: var(--ink-mid);
+      padding: .3rem .5rem; border-radius: 8px;
+    }
+    .mobile-menu a {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 1.4rem; font-weight: 700; color: var(--ink);
+      text-decoration: none; padding: 1rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { color: var(--accent); }
+
+    /* ── SHARE BUTTON ── */
+    .share-btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--surface); border: 1.5px solid var(--rule);
+      border-radius: 100px; padding: .55rem 1.2rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .82rem; font-weight: 600; color: var(--ink-mid);
+      cursor: pointer; text-decoration: none; transition: all .18s;
+      box-shadow: 0 1px 6px rgba(24,46,43,0.08);
+    }
+    .share-btn:hover { border-color: var(--accent); color: var(--accent); box-shadow: 0 2px 12px rgba(138,108,115,0.18); }
+
+    /* ── SIZE COMPARISON HERO ── */
+    .size-hero {
+      background: var(--paper-warm);
+      border-radius: 16px; padding: 2rem 2rem 1.5rem;
+      margin-bottom: 2rem; overflow: hidden;
+    }
+    .size-hero-title {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .68rem; font-weight: 800; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--ink-mid); margin-bottom: 1.5rem;
+    }
+    .size-scene {
+      display: flex; align-items: flex-end; gap: 1.5rem;
+      height: 260px; position: relative;
+    }
+    .size-obj {
+      display: flex; flex-direction: column; align-items: center;
+      flex: 1; height: 100%; justify-content: flex-end;
+    }
+    .size-bar {
+      width: 100%; border-radius: 6px 6px 0 0;
+      position: relative; display: flex; align-items: flex-start;
+      justify-content: center; padding-top: 8px;
+    }
+    .size-bar-val {
+      font-family: Georgia, serif; font-size: .72rem;
+      font-weight: 700; color: #fff; opacity: .9;
+    }
+    .size-label {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: .7rem; color: var(--ink-mid); text-align: center;
+      margin-top: .5rem; line-height: 1.3; max-width: 100px;
+    }
+    .size-label strong { display: block; color: var(--ink); }
+
+    /* ── PLAKATIVER: larger stats, more space ── */
+    /* stat-num size handled by clamp() above */
+    .args-section { padding: 4.5rem 0; }
+    .ref-section { padding: 4.5rem 0; }
+    .context-section { padding: 4.5rem 0; }
+
+    /* ── ARG titles bigger & bolder ── */
+    .arg-title {
+      font-size: 1.05rem !important;
+      font-weight: 700 !important;
+      margin-bottom: .4rem !important;
+      line-height: 1.35 !important;
+    }
+    .arg-text { font-size: .88rem !important; color: var(--ink-mid) !important; }
+
+    /* ── UTILS ── */
+    .mt-s { margin-top: 2rem; }
+    .mt-m { margin-top: 3.5rem; }
+  </style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <a href="lammerskopf-quiz.html">← Quiz starten</a>
+  WaldoderWind — Unabhängige Information zum Bürgerentscheid Heidelberg
+  <a href="#abstimmen">Abstimmen: 12. Juli →</a>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a class="nav-title" href="#top">
+      <img src="logo.png" alt="WaldoderWind" class="nav-logo">
+    </a>
+    <button class="nav-burger" onclick="document.getElementById('mobileMenu').classList.add('open')" aria-label="Menü öffnen">
+      <svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="22" height="2" rx="1" fill="currentColor"/>
+        <rect y="7" width="16" height="2" rx="1" fill="currentColor"/>
+        <rect y="14" width="22" height="2" rx="1" fill="currentColor"/>
+      </svg>
+    </button>
+    <ul class="nav-links">
+      <li><a href="#fakten">Fakten</a></li>
+      <li><a href="#argumente">Argumente</a></li>
+      <li><a href="#visualisierung">Anschaulich</a></li>
+      <li><a href="#amortisation">Klimabilanz</a></li>
+      <li><a href="#hintergrund">Hintergrund</a></li>
+      <li><a href="#abstimmen" class="nav-cta">📅 12. Juli</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="hero-inner">
+    <div class="hero-kicker">Bürgerentscheid Heidelberg · 12. Juli 2026</div>
+    <h1>250 Meter hoch. Mitten im Schutzgebiet. Du entscheidest.</h1>
+    <p class="hero-deck">Am 12. Juli stimmt Heidelberg über den Windpark Lammerskopf ab. Hier sind alle Fakten — klar, vollständig, ohne Agenda.</p>
+    <div class="hero-meta">
+      <span>Stand: Mai 2026</span>
+      <span class="vote-badge">📅 Abstimmung: 12. Juli 2026</span>
+      <span>Unabhängig · Parteipolitisch nicht gebunden</span>
+    </div>
+  </div>
+</header>
+
+<!-- STATS STRIP -->
+<div class="stats-strip" id="fakten">
+  <div class="stats-inner">
+    <div class="stat">
+      <div class="stat-num">7</div>
+      <div class="stat-label">Geplante Wind­kraft­anlagen auf Heidelberger Gemarkung</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">~250<span class="stat-unit">m</span></div>
+      <div class="stat-label">Geplante Gesamt­höhe — halbe Königstuhl-Höhe</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">FFH</div>
+      <div class="stat-label">EU-Schutzgebiet Natura 2000 — das gesamte Plangebiet</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">~14.000</div>
+      <div class="stat-label">Haushalte könnten versorgt werden (Jahres­ertrag)</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">20<span class="stat-unit">%</span></div>
+      <div class="stat-label">Quorum: Anteil aller Berechtigten für ein gültiges Ergebnis</div>
+    </div>
+  </div>
+</div>
+
+<!-- ABSTIMMUNGSFRAGE -->
+<section class="ref-section" id="abstimmung">
+  <div class="page">
+    <div class="section-head">
+      <h2>Die Abstimmungsfrage</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="ref-box">
+      <div class="ref-label">Offizielle Fragestellung — Bürgerentscheid 12. Juli 2026</div>
+      <div class="ref-question">„Soll die Stadt Heidelberg grundsätzlich das Gebiet Lammerskopf auf ihrer Gemarkung als Standort für Windkraftanlagen entwickeln?"</div>
+      <div class="ref-note">
+        <strong>Was ein Ja bedeutet:</strong> Nicht der sofortige Baubeschluss, sondern der Auftrag an die Stadt, die planungsrechtlichen Voraussetzungen weiterzuverfolgen. Konkrete Genehmigungsverfahren würden erst danach folgen.<br/><br/>
+        <strong>Was ein Nein bedeutet:</strong> Der gesamte Planungsprozess ist für mindestens drei Jahre gestoppt. Innerhalb dieser Frist kann nur ein neuer Bürgerentscheid das Ergebnis ändern.
+        <div class="ref-chips">
+          <span class="chip">📅 12. Juli 2026</span>
+          <span class="chip">Ab 16 Jahren abstimmberechtigt</span>
+          <span class="chip">Auch EU-Bürger mit Hauptwohnsitz HD</span>
+          <span class="chip">20 % Quorum erforderlich</span>
+          <span class="chip">Auch Neckargemünd stimmt ab</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHRONOLOGIE -->
+<div class="timeline-section" id="chronologie">
+  <div class="tl-grid">
+    <div class="section-head">
+      <h2>Chronologie</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="tl-items">
+      <div class="tl-item">
+        <div class="tl-date">Jan. 2023</div>
+        <div>
+          <div class="tl-title">ForstBW schreibt Staatswaldflächen aus</div>
+          <div class="tl-text">Das Land Baden-Württemberg schreibt über ForstBW ca. 600 Hektar Staatswald zwischen Heidelberg-Ziegelhausen und Schönau zur Verpachtung für Windkraft aus.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Okt. 2023</div>
+        <div>
+          <div class="tl-title">Lokales Konsortium erhält Zuschlag</div>
+          <div class="tl-text">Stadtwerke Heidelberg, Heidelberger Energiegenossenschaft, Energiegenossenschaft Starkenburg und BEG Kraichgau bekommen den Zuschlag für einen Bürgerwindpark.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2023–2025</div>
+        <div>
+          <div class="tl-title">Gutachten, Widerstand, öffentliche Debatte</div>
+          <div class="tl-text">Windmessungen und FFH-Verträglichkeitsprüfung werden durchgeführt. BUND und NABU kritisieren den Standort. Bürgerinitiativen sammeln über 10.800 Unterschriften.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Dez. 2025</div>
+        <div>
+          <div class="tl-title">Streichung aus dem Regionalplan</div>
+          <div class="tl-text">Die Verbandsversammlung der Metropolregion Rhein-Neckar lehnt die Aufnahme des Lammerskopfs als Vorranggebiet mit großer, parteienübergreifender Mehrheit ab — wegen ungelöster Naturschutzfragen und Zuwegungsproblemen.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Apr. 2026</div>
+        <div>
+          <div class="tl-title">Stadt beschreitet kommunalen Planungsweg</div>
+          <div class="tl-text">Trotz der Streichung will die Stadtverwaltung über einen kommunalen Bebauungsplan weitermachen. Der Gemeinderat beschließt mit Zweidrittelmehrheit einen Bürgerentscheid.</div>
+        </div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-date">12. Juli 2026</div>
+        <div>
+          <div class="tl-title">Bürgerentscheid in Heidelberg und Neckargemünd</div>
+          <div class="tl-text">Beide Städte stimmen am selben Tag ab. Neckargemünd will nur mitmachen, wenn Heidelberg mit Ja votiert.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PULL QUOTE -->
+<div class="pullquote">
+  <blockquote>„Das gesamte Plangebiet liegt fast vollständig in einem FFH-Schutzgebiet — einem der stärksten Schutzinstrumente des europäischen Naturrechts."</blockquote>
+  <cite>BUND Heidelberg, Stellungnahme 2024</cite>
+</div>
+
+<!-- ARGUMENTE -->
+<section class="args-section" id="argumente">
+  <div class="page">
+    <div class="section-head">
+      <h2>Die Argumente</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="args-grid">
+
+      <!-- PRO -->
+      <div>
+        <div class="arg-col-label pro">Für den Windpark</div>
+
+        <div class="arg-item">
+          <span class="fact-badge confirmed">✓ Belegt</span><div class="arg-title">Einer der besten Windstandorte der Region</div>
+          <div class="arg-text">In 175 Metern Höhe wurden 6,4 m/s Windgeschwindigkeit gemessen — 72 Prozent mehr Ertrag als an vergleichbaren Standorten in der Ebene. Der Jahresertrag könnte rund 14.000 Haushalte versorgen.</div>
+        </div>
+
+        <div class="arg-item">
+          <span class="fact-badge confirmed">✓ Belegt</span><div class="arg-title">Klimaschutz erfordert lokales Handeln</div>
+          <div class="arg-text">Baden-Württemberg gehört bundesweit zu den Schlusslichtern beim Windkraftausbau. Windenergie ergänzt Photovoltaik systemisch: Sie liefert Strom im Winter und nachts, wenn Solar kaum produziert.</div>
+        </div>
+
+        <div class="arg-item">
+          <span class="fact-badge confirmed">✓ Belegt</span><div class="arg-title">Gewinne bleiben in der Region</div>
+          <div class="arg-text">Als Bürgerwindpark mit lokalen Energiegenossenschaften fließen Erträge nicht an anonyme Investoren. Bürgerinnen können Genossenschaftsanteile erwerben und am Projekt teilhaben.</div>
+        </div>
+
+        <div class="arg-item">
+          <span class="fact-badge disputed">⚠ Umstritten</span><div class="arg-title">Gutachten sieht geeignete Teilflächen</div>
+          <div class="arg-text">Eine FFH-Verträglichkeitsprüfung identifiziert Teilbereiche, auf denen Windkraft ohne Beeinträchtigung der Schutzziele machbar sein soll — sofern die Zuwegungen entsprechend gelöst werden.</div>
+        </div>
+      </div>
+
+      <!-- CONTRA -->
+      <div>
+        <div class="arg-col-label contra">Gegen diesen Standort</div>
+
+        <div class="arg-item">
+          <span class="fact-badge confirmed">✓ Belegt</span><div class="arg-title">EU-Schutzgebiet mit seltenen Arten</div>
+          <div class="arg-text">Das Plangebiet liegt im FFH-Gebiet „Steinachtal und Kleiner Odenwald". Dort leben Mopsfledermaus, Bechsteinfledermaus und weitere windkraftsensible Arten, für die Deutschland besondere Schutzpflichten hat.</div>
+        </div>
+
+        <div class="arg-item">
+          <span class="fact-badge confirmed">✓ Belegt</span><div class="arg-title">Rechtssicherheit der Gutachten umstritten</div>
+          <div class="arg-text">BUND und NABU Heidelberg halten die FFH-Verträglichkeitsprüfung für nicht rechtssicher. Das Regierungspräsidium hat die geplante Zuwegung noch nicht bestätigt — jener Punkt, der zur Streichung aus dem Regionalplan führte.</div>
+        </div>
+
+        <div class="arg-item">
+          <span class="fact-badge confirmed">✓ Belegt</span><div class="arg-title">Standort Schwachwindzone — extreme Bauhöhe nötig</div>
+          <div class="arg-text">Der Odenwald gilt als Schwachwindzone. Erst in 175 Metern Höhe ist der Wind ausreichend stark — deshalb müssen die Anlagen bis zu 250 Meter hoch werden. Die extreme Höhe ist eine direkte Folge des schwierigen Standorts.</div>
+        </div>
+
+        <div class="arg-item">
+          <span class="fact-badge confirmed">✓ Belegt</span><div class="arg-title">Permanente Infrastruktur im Wald</div>
+          <div class="arg-text">Für Bau und Betrieb braucht es breite Zufahrtsstraßen, die dauerhaft erhalten bleiben müssen. Der Waldkorridor wird nicht wiederhergestellt — ein irreversibler Eingriff, der zur Streichung aus dem Regionalplan beitrug.</div>
+        </div>
+
+        <div class="arg-item">
+          <span class="fact-badge disputed">⚠ Umstritten</span><div class="arg-title">Alternativstandorte existieren</div>
+          <div class="arg-text">Eine BUND-Studie zeigt: In Baden-Württemberg stehen 3,3 % der Landesfläche mit gutem Windpotenzial und deutlich geringerem Naturschutzkonflikt zur Verfügung — vor allem im östlichen Rhein-Neckar-Kreis.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-s" style="background:var(--surface); border:1px solid var(--rule); padding:1.2rem 1.5rem; max-width:1000px;">
+      <span style="font-family:-apple-system,sans-serif; font-size:.82rem; color:var(--ink-mid);">
+        <strong style="color:var(--ink);">Hinweis:</strong> Diese Seite bewertet die Argumente nicht. Welche Seite überwiegt, ist eine politische Abwägung — die einzig mögliche Antwort gibt am 12. Juli jede Bürgerin und jeder Bürger selbst.
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO BREAK: Windräder im Wald -->
+<div style="position:relative; overflow:hidden; max-height:420px;">
+  <img src="bild-windraeder-wald.jpg"
+       alt="Windräder im deutschen Wald mit Zufahrtsstraße — Beispielbild eines vergleichbaren Standorts"
+       style="width:100%; height:420px; object-fit:cover; object-position:center 30%; display:block;">
+  <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(24,46,43,0.78) 0%, rgba(24,46,43,0.08) 50%, transparent 100%);"></div>
+  <div style="position:absolute; bottom:0; left:0; right:0; padding:1.5rem 2rem; max-width:900px; margin:0 auto;">
+    <p style="font-family:Georgia,serif; font-size:clamp(1rem,2.5vw,1.4rem); color:#fff; font-style:italic; line-height:1.5; margin-bottom:.4rem;">
+      „Windkraft im Wald bedeutet dauerhaft breite Zufahrtsstraßen — der Wald wächst dort nicht mehr nach."
+    </p>
+    <p style="font-family:-apple-system,sans-serif; font-size:.72rem; color:rgba(255,255,255,0.55); letter-spacing:.04em;">
+      KI-GENERIERTES BILD · ZEIGT EINEN VERGLEICHBAREN STANDORT · KEIN FOTO VOM LAMMERSKOPF
+    </p>
+  </div>
+</div>
+
+<!-- VISUALISIERUNG -->
+<section class="viz-section" id="visualisierung">
+  <div class="page">
+    <div class="section-head">
+      <h2>Anschaulich — Lage &amp; Größe</h2>
+      <div class="rule"></div>
+    </div>
+
+    <!-- Photo Illustration -->
+    <div class="viz-illustration">
+      <div style="position:relative; border-radius:6px; overflow:hidden; box-shadow:0 4px 24px rgba(0,0,0,0.22);">
+        <img src="bild-bruecke.jpg"
+             alt="KI-generiertes Bild: Blick von der Alten Brücke Heidelberg Richtung Osten mit sichtbaren Windrädern am Horizont"
+             style="width:100%; height:auto; display:block; max-height:500px; object-fit:cover; object-position:center 55%;">
+        <div style="position:absolute; top:0; left:0; right:0; padding:.45rem 1rem; background:rgba(8,28,18,0.68);">
+          <span style="font-family:-apple-system,sans-serif; font-size:.68rem; font-weight:600; color:rgba(255,255,255,0.82); letter-spacing:.07em; text-transform:uppercase;">KI-generiertes Bild · Ungefähre Darstellung · Keine amtliche Sichtbarkeitsstudie</span>
+        </div>
+        <div style="position:absolute; bottom:0; left:0; right:0; padding:.6rem 1rem; background:linear-gradient(transparent, rgba(24,46,43,0.78));">
+          <span style="font-family:-apple-system,sans-serif; font-size:.82rem; color:rgba(255,255,255,0.92); font-weight:500;">📍 Blick von der Alten Brücke → Osten &nbsp;·&nbsp; Richtung Ziegelhausen / Lammerskopf</span>
+        </div>
+      </div>
+      <p class="viz-cap" style="margin-top:.7rem;">
+        <strong>Blick von der Alten Brücke nach Osten, Richtung Ziegelhausen.</strong> Dieses KI-generierte Bild zeigt die ungefähre visuelle Wirkung der geplanten Windräder am Lammerskopf. Da die Anlagen bis zu 250 m hoch werden und ca. 5–7 km entfernt liegen, würden die Rotorblätter über die Hügelkuppe hinausragen und von vielen Punkten in und um Heidelberg aus sichtbar sein. Eine amtliche Sichtbarkeitsstudie liegt bislang nicht vor.
+      </p>
+    </div>
+
+    <!-- Map + Size comparison -->
+    <div class="viz-grid">
+      <div>
+        <div class="viz-map-label">📍 Standort im Östlichen Stadtwald</div>
+        <div class="viz-map-wrap">
+          <iframe
+            src="https://www.openstreetmap.org/export/embed.html?bbox=8.66%2C49.37%2C8.83%2C49.45&amp;layer=mapnik"
+            title="Karte: Lammerskopf östlich von Heidelberg"
+            loading="lazy">
+          </iframe>
+        </div>
+        <p class="viz-cap" style="margin-top:.5rem;">Der Lammerskopf liegt im östlichen Heidelberger Stadtwald, oberhalb des Stadtteils Ziegelhausen. Karte: © OpenStreetMap-Mitwirkende</p>
+      </div>
+
+      <div>
+        <div class="size-hero">
+          <div class="size-hero-title">Größenvergleich — 250 m</div>
+          <div class="size-scene">
+            <!-- Scale: 260px = 330m → 1px = 0.788m. So 250m = 198px, 157m = 124px, 60m = 47px, 330m = 260px -->
+            <div class="size-obj">
+              <div class="size-bar" style="height:47px; background:#9ac4b4;">
+                <span class="size-bar-val">60 m</span>
+              </div>
+              <div class="size-label"><strong>Heidelberger Schloss</strong>ca.</div>
+            </div>
+            <div class="size-obj">
+              <div class="size-bar" style="height:124px; background:#4d7a68;">
+                <span class="size-bar-val">157 m</span>
+              </div>
+              <div class="size-label"><strong>Kölner Dom</strong>höchste Kirche D.</div>
+            </div>
+            <div class="size-obj" style="flex:1.5;">
+              <div class="size-bar" style="height:198px; background:var(--green); box-shadow:0 0 0 4px rgba(30,140,88,0.25);">
+                <span class="size-bar-val" style="font-size:.85rem;">250 m</span>
+              </div>
+              <div class="size-label" style="max-width:none;"><strong style="color:var(--green);">Windrad Lammerskopf</strong>geplant</div>
+            </div>
+            <div class="size-obj">
+              <div class="size-bar" style="height:260px; background:#2e4d49;">
+                <span class="size-bar-val">330 m</span>
+              </div>
+              <div class="size-label"><strong>Eiffelturm</strong>Paris</div>
+            </div>
+          </div>
+        </div>
+        <p class="viz-cap">Die Turbinentips auf 730 m ü. NN — höher als der Königstuhl-Gipfel (568 m). Von vielen Punkten in Heidelberg aus über den Horizont sichtbar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AMORTISATION -->
+<section class="amort-section" id="amortisation">
+  <div class="page">
+    <div class="section-head">
+      <h2>Wann lohnt es sich — aus Klimasicht?</h2>
+      <div class="rule"></div>
+    </div>
+    <p class="amort-intro">
+      Jede Windkraftanlage verursacht beim Bau CO₂ — durch Materialien, Transport und Installation. Die entscheidende Frage ist: Wie lange dauert es, bis die Anlage durch sauberen Strom diese Emissionen wieder einspart? Diese Zeitspanne heißt <strong>CO₂-Amortisation</strong>.
+    </p>
+
+    <div class="amort-timeline">
+      <div class="timeline-bar">
+        <div class="tl-seg build">Bau</div>
+        <div class="tl-seg payoff">CO₂-Rückzahl.</div>
+        <div class="tl-seg clean">≈ 23 Jahre emissionsfreie Energie</div>
+        <div class="tl-seg decom">Abbau</div>
+      </div>
+      <div class="tl-legend">
+        <span><span class="dot" style="background:#8a6c73"></span>Bau &amp; Installation (~6 Monate)</span>
+        <span><span class="dot" style="background:#9e8070"></span>CO₂-Amortisation (6–18 Monate*)</span>
+        <span><span class="dot" style="background:#4d7a68"></span>Saubere Energie (~23 Jahre)</span>
+        <span><span class="dot" style="background:#c9a9a9"></span>Rückbau</span>
+      </div>
+    </div>
+
+    <div class="amort-stats">
+      <div class="amort-stat">
+        <div class="a-num">6–18</div>
+        <div class="a-label">Monate CO₂-Amortisation im Binnenland*</div>
+      </div>
+      <div class="amort-stat">
+        <div class="a-num">23+</div>
+        <div class="a-label">Jahre danach: nahezu emissionsfreie Produktion</div>
+      </div>
+      <div class="amort-stat">
+        <div class="a-num">~11 000</div>
+        <div class="a-label">Haushalte könnten alle 7 Anlagen versorgen</div>
+      </div>
+      <div class="amort-stat">
+        <div class="a-num">&lt; 20×</div>
+        <div class="a-label">weniger CO₂ über die Lebensdauer als Kohlestrom</div>
+      </div>
+    </div>
+
+    <div class="amort-callout">
+      <strong>Schwachwindzone Odenwald — ein wichtiger Unterschied:</strong> Weil im Binnenland weniger Wind weht als an der Küste, produzieren die Anlagen pro Jahr weniger Strom. Das verlängert die CO₂-Amortisation im Vergleich zum Bundesdurchschnitt. Gleichzeitig bedeutet es: Die Anlagen laufen zwar — aber weniger effizient. Über 25 Jahre gesehen bleibt die Klimabilanz auch hier klar positiv. Die Frage ist vielmehr, ob der gewählte Standort die ökologisch beste Option ist.
+    </div>
+
+    <p class="amort-source">* Quellen: Umweltbundesamt (2022), IPCC Working Group III, Fraunhofer IEE · Schwachwindzone Binnenland: oberes Ende der Spanne (Küste: 3–6 Monate)</p>
+  </div>
+</section>
+
+<!-- PHOTO BREAK: Wald / Naturschutz -->
+<div style="position:relative; overflow:hidden; max-height:340px;">
+  <img src="bild-wald-natur.jpg"
+       alt="Naturnaher Mischwald — wie der Heidelberger Stadtwald am Lammerskopf"
+       style="width:100%; height:340px; object-fit:cover; object-position:center 40%; display:block;">
+  <div style="position:absolute; inset:0; background:linear-gradient(to right, rgba(24,46,43,0.68) 0%, rgba(24,46,43,0.08) 60%, transparent 100%);"></div>
+  <div style="position:absolute; top:50%; left:2rem; transform:translateY(-50%); max-width:480px;">
+    <div style="font-family:-apple-system,sans-serif; font-size:.68rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--green-mid); margin-bottom:.5rem;">FFH-Schutzgebiet</div>
+    <p style="font-family:Georgia,serif; font-size:clamp(.95rem,2vw,1.2rem); color:#fff; line-height:1.55;">
+      Der Lammerskopf liegt im EU-Natura-2000-Schutzgebiet — einem der artenreichsten Waldgebiete rund um Heidelberg.
+    </p>
+  </div>
+</div>
+
+<!-- HINTERGRUND -->
+<section class="context-section" id="hintergrund">
+  <div class="page">
+    <div class="section-head">
+      <h2>Hintergrund</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="context-grid">
+      <div class="context-body">
+        <h3>Wer profitiert — und wer trägt die Kosten?</h3>
+        <p>Die Projektgemeinschaft besteht aus den Stadtwerken Heidelberg sowie drei lokalen Energiegenossenschaften. Die Stadtwerke sind ein städtisches Unternehmen — Gewinne aus dem Windpark fließen damit indirekt auch in den Stadthaushalt. Das ist ein legitimes wirtschaftliches Interesse, das neben den Klimaschutzzielen existiert und transparent benannt werden sollte.</p>
+        <p>Die Stadt Heidelberg nimmt dabei eine Doppelrolle ein: Sie ist gleichzeitig Planungsbehörde und Miteigentümerin des Betreiberkonsortiums. Das ist nicht illegal, aber eine Interessenlage, die bei der Bewertung der offiziellen Informationen berücksichtigt werden sollte.</p>
+        <h3>Warum wird überhaupt abgestimmt?</h3>
+        <p>Der Lammerskopf wurde Ende 2025 aus dem Regionalplan gestrichen — das Verfahren war damit aus regulärer Planungssicht beendet. Die Stadtverwaltung will den Standort trotzdem über einen kommunalen Bebauungsplan entwickeln. Dieser ungewöhnliche Schritt war der Auslöser für den Bürgerentscheid: Der Gemeinderat entschied, die Grundsatzfrage direkt der Bevölkerung vorzulegen.</p>
+        <h3>Was ist mit den anderen geplanten Standorten?</h3>
+        <p>Parallel zum Lammerskopf stehen Weißer Stein und Hoher Nistler im Heidelberger Stadtwald ebenfalls auf der Planungsliste — bis zu neun weitere Anlagen. Diese Standorte befinden sich noch früher im Verfahren, haben aber ähnliche Naturschutzkonflikte. Der Bürgerentscheid am 12. Juli betrifft ausschließlich den Lammerskopf.</p>
+      </div>
+
+      <div>
+        <div class="sidebar-box">
+          <div class="sidebar-title">Wer sind die Akteure?</div>
+          <div class="sidebar-item">
+            <div class="sidebar-label">Projektgemeinschaft (Pro)</div>
+            <div class="sidebar-text">Stadtwerke Heidelberg, Heidelberger Energiegenossenschaft, Energiegenossenschaft Starkenburg, BEG Kraichgau</div>
+          </div>
+          <div class="sidebar-item">
+            <div class="sidebar-label">Naturschutz (Kritisch)</div>
+            <div class="sidebar-text">BUND Heidelberg, NABU Heidelberg — beide für Windkraft, aber gegen diesen Standort</div>
+          </div>
+          <div class="sidebar-item">
+            <div class="sidebar-label">Bürgerinitiativen (Dagegen)</div>
+            <div class="sidebar-text">NOW Lebenswertes Ziegelhausen, ProWald ProWind, weitere — über 10.800 Unterschriften gesammelt</div>
+          </div>
+          <div class="sidebar-item">
+            <div class="sidebar-label">Stadt Heidelberg</div>
+            <div class="sidebar-text">Stadtverwaltung und Gemeinderat sind für die Entwicklung des Standorts — mit Zweidrittelmehrheit beschlossen</div>
+          </div>
+          <div class="sidebar-item">
+            <div class="sidebar-label">Politische Parteien</div>
+            <div class="sidebar-text">Grüne und SPD-Fraktion unterstützen das Projekt. Fridays for Future Heidelberg spricht sich ebenfalls dafür aus.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-strip" id="abstimmen" style="
+  position:relative; overflow:hidden;
+  background-image:url('bild-wahlzettel.jpg');
+  background-size:cover; background-position:center 45%;
+  
+">
+  <div style="position:absolute; inset:0; background:rgba(240,247,243,0.94); backdrop-filter:blur(2px);"></div>
+  <div style="position:relative; z-index:1;">
+    <h2>Am 12. Juli abstimmen gehen</h2>
+    <p>Der Bürgerentscheid zählt nur, wenn mindestens 20 % aller Stimmberechtigten auf der Seite der Mehrheit stehen. Nicht wählen ist keine neutrale Entscheidung.</p>
+    <div class="cta-btns">
+      <a class="btn-primary" href="lammerskopf-quiz.html">← Zurück zum Quiz</a>
+    <button class="share-btn" onclick="sharePage()">↗ Seite teilen</button>
+      <a class="btn-secondary" href="https://www.heidelberg.de/HD/entwickeln/buergerwindpark+lammerskopf.html" target="_blank">Offizielle Stadtseite ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- SOURCES -->
+<section class="sources-section">
+  <div class="page">
+    <div class="section-head">
+      <h2>Quellen</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="sources-grid">
+      <div class="source-item">→ <a href="https://www.heidelberg.de/HD/entwickeln/haeufige+fragen+_+antworten.html" target="_blank">Stadt Heidelberg: FAQ Bürgerentscheid</a></div>
+      <div class="source-item">→ <a href="https://www.bund-heidelberg.de/klimaschutz/windkraft-in-heidelberg/windpark-lammerskopf/" target="_blank">BUND Heidelberg: Windpark Lammerskopf</a></div>
+      <div class="source-item">→ <a href="https://www.bund-heidelberg.de/klimaschutz/windkraft-in-heidelberg/naturvertraeglicher-windenergieausbau-heidelberg/" target="_blank">BUND Heidelberg: Naturverträglicher Ausbau</a></div>
+      <div class="source-item">→ <a href="https://heg.solar/windpark-lammerskopf/" target="_blank">Heidelberger Energiegenossenschaft</a></div>
+      <div class="source-item">→ <a href="https://now-ziegelhausen.de/wka-lammerskopf-infos/" target="_blank">NOW Ziegelhausen: Aktuelle Infos</a></div>
+      <div class="source-item">→ <a href="https://www.mrn-news.de/2026/05/15/heidelberg-windenergie-am-lammerskopf-stadt-informiert-mit-forum-energiedialog-ueber-buergerentscheid-am-12-juli-637671/" target="_blank">MRN-News: Forum Energiedialog</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><img src="logo.png" alt="WaldoderWind" style="height:52px; width:auto; mix-blend-mode:multiply; filter:brightness(0) invert(1); opacity:.7; margin-bottom:.4rem;"><br/><strong>waldoderwind</strong></p>
+  <p style="margin-top:.4rem;">Unabhängig · Parteipolitisch nicht gebunden · Nicht von Interessengruppen finanziert<br/>Keine persönlichen Daten · Keine Cookies · Keine Analytics</p>
+  <p style="margin-top:.8rem; opacity:.5;">Stand: Mai 2026 · Alle Angaben nach bestem Wissen aus öffentlichen Quellen · Keine Haftung für Vollständigkeit</p>
+</footer>
+
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-menu-close" onclick="document.getElementById('mobileMenu').classList.remove('open')">✕</button>
+  <a href="#fakten" onclick="document.getElementById('mobileMenu').classList.remove('open')">Fakten</a>
+  <a href="#abstimmung" onclick="document.getElementById('mobileMenu').classList.remove('open')">Abstimmung</a>
+  <a href="#chronologie" onclick="document.getElementById('mobileMenu').classList.remove('open')">Chronologie</a>
+  <a href="#argumente" onclick="document.getElementById('mobileMenu').classList.remove('open')">Argumente</a>
+  <a href="#visualisierung" onclick="document.getElementById('mobileMenu').classList.remove('open')">Anschaulich</a>
+  <a href="#amortisation" onclick="document.getElementById('mobileMenu').classList.remove('open')">Klimabilanz</a>
+  <a href="#hintergrund" onclick="document.getElementById('mobileMenu').classList.remove('open')">Hintergrund</a>
+  <a href="#abstimmen" onclick="document.getElementById('mobileMenu').classList.remove('open')" style="color:var(--accent);">📅 12. Juli abstimmen</a>
+</div>
+
+<script>
+// Nav scroll shadow
+(function() {
+  var nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', function() {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+})();
+
+function sharePage() {
+  const data = {
+    title: 'Windpark Lammerskopf — Die Faktenlage',
+    text: 'Alles zum Bürgerentscheid am 12. Juli in Heidelberg — sachlich, vollständig, unabhängig.',
+    url: window.location.href
+  };
+  if (navigator.share) {
+    navigator.share(data);
+  } else {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      alert('Link kopiert!');
+    });
+  }
+}
+</script>
+
+</body>
+</html>

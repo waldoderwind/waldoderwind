@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>WaldoderWind — Instagram Konzept</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #f0ebe7;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2.5rem 1rem 4rem;
+}
+
+/* ── LABEL BAR ── */
+.concept-bar {
+  width: 100%; max-width: 480px;
+  background: #2e4d49;
+  color: rgba(255,255,255,.85);
+  border-radius: 12px 12px 0 0;
+  padding: .65rem 1.2rem;
+  font-size: .7rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.concept-bar span { opacity: .5; font-weight: 400; letter-spacing: 0; text-transform: none; font-size: .72rem; }
+
+/* ── PHONE SHELL ── */
+.phone {
+  width: 100%; max-width: 480px;
+  background: #fff;
+  border-radius: 0 0 32px 32px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(46,77,73,0.18), 0 4px 16px rgba(46,77,73,0.1);
+}
+
+/* ── INSTAGRAM NAV ── */
+.ig-topbar {
+  background: #fff;
+  border-bottom: 1px solid #e8e0db;
+  padding: .65rem 1rem .5rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.ig-topbar .ig-logo {
+  font-family: 'Georgia', serif;
+  font-size: 1.35rem; font-weight: 700; letter-spacing: -.03em;
+  color: #2e4d49;
+}
+.ig-topbar .ig-icons { display: flex; gap: 1.1rem; }
+.ig-topbar .ig-icons svg { opacity: .7; }
+
+/* ── STORIES ── */
+.stories-row {
+  display: flex; gap: .85rem;
+  padding: 1rem 1rem .8rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid #f0e8e4;
+}
+.stories-row::-webkit-scrollbar { display: none; }
+.story {
+  display: flex; flex-direction: column; align-items: center;
+  gap: .35rem; flex-shrink: 0;
+}
+.story-ring {
+  width: 60px; height: 60px; border-radius: 50%;
+  background: linear-gradient(135deg, #4d7a68 0%, #8a6c73 50%, #c9a9a9 100%);
+  padding: 2.5px;
+  display: flex; align-items: center; justify-content: center;
+}
+.story-ring.seen {
+  background: #e8e0db;
+}
+.story-avatar {
+  width: 100%; height: 100%; border-radius: 50%;
+  background: #f0ebe7;
+  border: 2px solid #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .85rem; overflow: hidden;
+}
+.story-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.story-label {
+  font-size: .62rem; color: #2e4d49; text-align: center;
+  max-width: 64px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.story-label.bold { font-weight: 700; }
+
+/* ── PROFILE ── */
+.profile-section {
+  padding: 1.2rem 1rem 0;
+}
+.profile-top {
+  display: flex; align-items: center; gap: 1rem;
+  margin-bottom: 1rem;
+}
+.profile-avatar {
+  width: 78px; height: 78px; border-radius: 50%;
+  background: linear-gradient(135deg, #4d7a68 0%, #8a6c73 100%);
+  padding: 2.5px; flex-shrink: 0;
+}
+.profile-avatar-inner {
+  width: 100%; height: 100%; border-radius: 50%;
+  background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  border: 2px solid #fff;
+}
+.profile-avatar-inner img { width: 100%; height: 100%; object-fit: cover; }
+.profile-stats { display: flex; gap: 1.4rem; }
+.pstat { text-align: center; }
+.pstat-num { font-size: 1rem; font-weight: 800; color: #2e4d49; }
+.pstat-label { font-size: .68rem; color: #8a7a75; }
+.profile-name { font-weight: 800; font-size: .92rem; color: #2e4d49; margin-bottom: .18rem; }
+.profile-bio {
+  font-size: .8rem; color: #4a4040; line-height: 1.5;
+  margin-bottom: .5rem;
+}
+.profile-link { font-size: .8rem; color: #4d7a68; font-weight: 600; }
+
+/* ── PROFILE BUTTONS ── */
+.profile-btns {
+  display: flex; gap: .5rem;
+  padding: .8rem 1rem 0;
+}
+.pbtn {
+  flex: 1; border: 1.5px solid #ddd0ca;
+  border-radius: 8px; padding: .42rem .5rem;
+  font-size: .82rem; font-weight: 700; color: #2e4d49;
+  background: #fff; cursor: pointer; text-align: center;
+}
+.pbtn.primary { background: #2e4d49; color: #fff; border-color: #2e4d49; }
+
+/* ── HIGHLIGHTS ── */
+.highlights {
+  padding: 1rem 1rem .6rem;
+  border-bottom: 1px solid #f0e8e4;
+}
+.highlights-row { display: flex; gap: 1.1rem; overflow-x: auto; scrollbar-width: none; }
+.highlight {
+  display: flex; flex-direction: column; align-items: center; gap: .4rem;
+  flex-shrink: 0;
+}
+.hl-ring {
+  width: 58px; height: 58px; border-radius: 50%;
+  border: 1.5px solid #ddd0ca;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; background: #faf8f6;
+}
+.hl-label { font-size: .62rem; color: #4a4040; text-align: center; }
+
+/* ── GRID TABS ── */
+.grid-tabs {
+  display: flex; border-bottom: 1px solid #f0e8e4;
+}
+.grid-tab {
+  flex: 1; padding: .7rem;
+  display: flex; align-items: center; justify-content: center;
+  border-bottom: 2px solid transparent;
+}
+.grid-tab.active { border-bottom-color: #2e4d49; }
+.grid-tab svg { opacity: .4; }
+.grid-tab.active svg { opacity: 1; }
+
+/* ── POST GRID ── */
+.post-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 2px; background: #e8e0db;
+}
+.post {
+  aspect-ratio: 1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  cursor: pointer;
+}
+.post-inner {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: .6rem;
+  text-align: center;
+}
+
+/* Post color themes */
+.post-teal { background: #2e4d49; }
+.post-sage { background: #4d7a68; }
+.post-rose { background: #f2ebe8; }
+.post-mauve { background: #8a6c73; }
+.post-sand { background: #b9a08c; }
+.post-light { background: #ecf6f1; }
+.post-dark  { background: #1a302e; }
+.post-cream { background: #faf8f6; border: 1px solid #e8e0db; }
+
+.post-num {
+  font-family: Georgia, serif;
+  font-size: 1.5rem; font-weight: 700; line-height: 1;
+  margin-bottom: .2rem;
+}
+.post-sub {
+  font-size: .48rem; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; line-height: 1.3;
+}
+.post-tag {
+  font-size: .42rem; letter-spacing: .08em; text-transform: uppercase;
+  margin-bottom: .3rem; opacity: .7;
+}
+.post-logo { width: 44px; height: auto; opacity: .9; }
+
+/* text colors */
+.on-dark { color: #fff; }
+.on-dark .post-sub { color: rgba(255,255,255,.7); }
+.on-dark .post-tag { color: rgba(255,255,255,.5); }
+.on-light { color: #2e4d49; }
+.on-light .post-sub { color: #4d7a68; }
+.on-light .post-tag { color: #8a6c73; }
+
+/* reel icon */
+.post-reel {
+  position: absolute; top: 5px; right: 6px;
+  opacity: .8;
+}
+
+/* ── BOTTOM NAV ── */
+.ig-bottom {
+  background: #fff; border-top: 1px solid #e8e0db;
+  display: flex;
+  padding: .6rem 0 calc(.6rem + env(safe-area-inset-bottom, 0px));
+}
+.ig-bottom-item {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  padding: .3rem 0;
+}
+.ig-bottom-item svg { opacity: .45; }
+.ig-bottom-item.active svg { opacity: 1; }
+.ig-bottom-avatar {
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 2px solid #2e4d49;
+  overflow: hidden; background: #f0ebe7;
+  display: flex; align-items: center; justify-content: center;
+}
+.ig-bottom-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ── CONCEPT NOTE ── */
+.concept-note {
+  width: 100%; max-width: 480px;
+  margin-top: 1.5rem;
+  background: #2e4d49;
+  border-radius: 14px;
+  padding: 1.3rem 1.4rem;
+  color: rgba(255,255,255,.85);
+  font-size: .82rem; line-height: 1.65;
+}
+.concept-note h3 {
+  color: #9ac4b4; font-size: .68rem; font-weight: 800;
+  letter-spacing: .1em; text-transform: uppercase;
+  margin-bottom: .7rem;
+}
+.concept-note ul { padding-left: 1.1rem; }
+.concept-note li { margin-bottom: .35rem; }
+.concept-note strong { color: #c9a9a9; }
+</style>
+</head>
+<body>
+
+<div class="concept-bar">
+  Instagram Konzept · @waldoderwind
+  <span>Konzeptvisualisierung — kein echter Account</span>
+</div>
+
+<div class="phone">
+
+  <!-- TOP BAR -->
+  <div class="ig-topbar">
+    <div class="ig-logo">waldoderwind</div>
+    <div class="ig-icons">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2e4d49" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2e4d49" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </div>
+  </div>
+
+  <!-- PROFILE -->
+  <div class="profile-section">
+    <div class="profile-top">
+      <div class="profile-avatar">
+        <div class="profile-avatar-inner">
+          <img src="logo.png" alt="WaldoderWind">
+        </div>
+      </div>
+      <div>
+        <div class="profile-stats">
+          <div class="pstat"><div class="pstat-num">9</div><div class="pstat-label">Beiträge</div></div>
+          <div class="pstat"><div class="pstat-num">284</div><div class="pstat-label">Follower</div></div>
+          <div class="pstat"><div class="pstat-num">12</div><div class="pstat-label">Gefolgt</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="profile-name">waldoderwind</div>
+    <div class="profile-bio">🌲 Windpark Lammerskopf · Heidelberg<br/>Alle Fakten. Keine Agenda. Deine Entscheidung.<br/>📅 Bürgerentscheid: 12. Juli 2026</div>
+    <div class="profile-link">↗ waldoderwind.de</div>
+  </div>
+
+  <div class="profile-btns">
+    <div class="pbtn primary">Folgen</div>
+    <div class="pbtn">Nachricht</div>
+    <div class="pbtn" style="flex:0; padding:.42rem .7rem;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+  </div>
+
+  <!-- HIGHLIGHTS -->
+  <div class="highlights">
+    <div class="highlights-row">
+      <div class="highlight">
+        <div class="hl-ring">📊</div>
+        <div class="hl-label">Fakten</div>
+      </div>
+      <div class="highlight">
+        <div class="hl-ring">🎯</div>
+        <div class="hl-label">Quiz</div>
+      </div>
+      <div class="highlight">
+        <div class="hl-ring">🗳️</div>
+        <div class="hl-label">Abstimmung</div>
+      </div>
+      <div class="highlight">
+        <div class="hl-ring">🌲</div>
+        <div class="hl-label">Naturschutz</div>
+      </div>
+      <div class="highlight">
+        <div class="hl-ring">⚡</div>
+        <div class="hl-label">Klima</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="grid-tabs">
+    <div class="grid-tab active">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2e4d49" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+    </div>
+    <div class="grid-tab">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2e4d49" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+    </div>
+    <div class="grid-tab">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2e4d49" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    </div>
+  </div>
+
+  <!-- POST GRID -->
+  <div class="post-grid">
+
+    <!-- Post 1 -->
+    <div class="post post-teal on-dark">
+      <div class="post-inner">
+        <div class="post-tag">Größe</div>
+        <div class="post-num">250m</div>
+        <div class="post-sub">hoch.<br/>Du entscheidest.</div>
+      </div>
+    </div>
+
+    <!-- Post 2 -->
+    <div class="post post-rose on-light">
+      <div class="post-inner">
+        <div class="post-tag">Schutzgebiet</div>
+        <div class="post-num" style="font-size:1.1rem;">FFH</div>
+        <div class="post-sub">Natura 2000<br/>EU-Schutzgebiet</div>
+      </div>
+    </div>
+
+    <!-- Post 3 -->
+    <div class="post post-sage on-dark">
+      <div class="post-inner">
+        <div class="post-tag">Klimabilanz</div>
+        <div class="post-num">6–18</div>
+        <div class="post-sub">Monate CO₂-<br/>Amortisation</div>
+      </div>
+    </div>
+
+    <!-- Post 4 -->
+    <div class="post post-cream on-light">
+      <div class="post-inner">
+        <img src="logo.png" class="post-logo" alt="WaldoderWind">
+        <div class="post-sub" style="margin-top:.4rem; color:#4d7a68;">Weißt du's<br/>wirklich?</div>
+        <div class="post-tag" style="margin-top:.3rem; color:#8a6c73;">→ Quiz starten</div>
+      </div>
+    </div>
+
+    <!-- Post 5: Reel -->
+    <div class="post post-dark on-dark">
+      <div class="post-inner">
+        <div class="post-tag">Abstimmung</div>
+        <div class="post-num" style="font-size:1.1rem; color:#c9a9a9;">12.<br/>Juli</div>
+        <div class="post-sub">Deine Stimme<br/>zählt</div>
+      </div>
+      <div class="post-reel">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6zm6.5 2.5v7l6-3.5-6-3.5z"/></svg>
+      </div>
+    </div>
+
+    <!-- Post 6 -->
+    <div class="post post-mauve on-dark">
+      <div class="post-inner">
+        <div class="post-tag">Fakten</div>
+        <div class="post-num">7</div>
+        <div class="post-sub">geplante<br/>Windräder</div>
+      </div>
+    </div>
+
+    <!-- Post 7 -->
+    <div class="post post-light on-light">
+      <div class="post-inner">
+        <div class="post-tag">Energie</div>
+        <div class="post-num">14.000</div>
+        <div class="post-sub" style="font-size:.44rem;">Haushalte<br/>versorgt</div>
+      </div>
+    </div>
+
+    <!-- Post 8 -->
+    <div class="post post-sand on-dark">
+      <div class="post-inner">
+        <div class="post-tag">Quorum</div>
+        <div class="post-num">20%</div>
+        <div class="post-sub">aller Stimm-<br/>berechtigten</div>
+      </div>
+    </div>
+
+    <!-- Post 9 -->
+    <div class="post post-teal on-dark" style="opacity:.85;">
+      <div class="post-inner">
+        <div class="post-tag">Standort</div>
+        <div class="post-num" style="font-size:.95rem; color:#9ac4b4;">Lammers-<br/>kopf</div>
+        <div class="post-sub">Östlicher<br/>Stadtwald HD</div>
+      </div>
+    </div>
+
+  </div><!-- end grid -->
+
+  <!-- BOTTOM NAV -->
+  <div class="ig-bottom">
+    <div class="ig-bottom-item">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2e4d49" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+    </div>
+    <div class="ig-bottom-item">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2e4d49" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </div>
+    <div class="ig-bottom-item">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2e4d49" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+    </div>
+    <div class="ig-bottom-item">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2e4d49" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    </div>
+    <div class="ig-bottom-item active">
+      <div class="ig-bottom-avatar">
+        <img src="logo.png" alt="">
+      </div>
+    </div>
+  </div>
+
+</div><!-- end phone -->
+
+<!-- CONCEPT NOTE -->
+<div class="concept-note">
+  <h3>Post-Ideen für @waldoderwind</h3>
+  <ul>
+    <li><strong>Fakten-Kacheln</strong> — je ein Fakt pro Post: "250m hoch", "7 Anlagen", "FFH-Gebiet", "12. Juli"</li>
+    <li><strong>Story-Serie</strong> — PRO vs. CONTRA als Wisch-Story, beide Seiten gleichwertig</li>
+    <li><strong>Quiz-Link in Bio</strong> — "Weißt du's wirklich? → waldoderwind.de"</li>
+    <li><strong>Countdown-Story</strong> — letzte 7 Tage vor dem 12. Juli täglich einen Fakt</li>
+    <li><strong>Reels</strong> — 30-Sek. Erklärung: "Was passiert wenn du Ja/Nein stimmst?"</li>
+    <li><strong>Highlight-Archiv</strong> — Fakten, Quiz, Abstimmung, Naturschutz, Klima</li>
+  </ul>
+</div>
+
+</body>
+</html>
