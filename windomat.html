@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wind-O-Mat — Bürgerentscheid Lammerskopf Heidelberg</title>
+  <meta name="description" content="Der Wind-O-Mat: 15 Aussagen, deine Meinung — wo stehst du beim Bürgerentscheid Windpark Lammerskopf Heidelberg?"/>
+  <style>
+    :root {
+      --teal:       #2e4d49;
+      --sage:       #4d7a68;
+      --sage-mid:   #5e8c7a;
+      --sage-pale:  #e4efeb;
+      --rose:       #c9a9a9;
+      --mauve:      #8a6c73;
+      --sand:       #b9a08c;
+      --paper:      #faf8f6;
+      --paper-warm: #f2ebe8;
+      --rule:       #e8ddd8;
+      --ink:        #2e4d49;
+      --radius:     16px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    /* ── PROGRESS BAR ── */
+    #progress-track {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--rule);
+      z-index: 100;
+    }
+    #progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--sage), var(--sage-mid));
+      width: 0%;
+      transition: width 0.5s cubic-bezier(.4,0,.2,1);
+      border-radius: 0 2px 2px 0;
+    }
+
+    /* ── PARTICLES ── */
+    .particle {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── SCREENS ── */
+    .screen {
+      display: none;
+      width: 100%;
+      min-height: 100vh;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.2rem;
+    }
+    .screen.active { display: flex; }
+
+    /* ── START SCREEN ── */
+    #screen-start {
+      background: var(--paper);
+      text-align: center;
+    }
+
+    .start-logo {
+      margin-bottom: 2rem;
+    }
+    .start-logo img {
+      height: 48px;
+      width: auto;
+      mix-blend-mode: multiply;
+    }
+
+    .start-badge {
+      display: inline-block;
+      background: var(--sage-pale);
+      color: var(--sage);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: .35rem .9rem;
+      border-radius: 99px;
+      margin-bottom: 1.4rem;
+    }
+
+    .start-title {
+      font-size: clamp(2.4rem, 8vw, 4rem);
+      font-weight: 800;
+      color: var(--teal);
+      letter-spacing: -.02em;
+      line-height: 1.05;
+      margin-bottom: .6rem;
+    }
+    .start-title span {
+      color: var(--sage);
+    }
+
+    .start-sub {
+      font-size: clamp(.95rem, 2.5vw, 1.1rem);
+      color: var(--mauve);
+      max-width: 380px;
+      line-height: 1.6;
+      margin: 0 auto 2.4rem;
+    }
+
+    .start-meta {
+      display: flex;
+      gap: 1.4rem;
+      justify-content: center;
+      margin-bottom: 2.4rem;
+      flex-wrap: wrap;
+    }
+    .start-meta-item {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      font-size: .82rem;
+      color: var(--mauve);
+    }
+    .start-meta-item .icon { font-size: 1rem; }
+
+    .btn-start {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      background: var(--teal);
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 700;
+      padding: 1rem 2.4rem;
+      border-radius: 99px;
+      border: none;
+      cursor: pointer;
+      transition: transform .15s, box-shadow .15s, background .15s;
+      box-shadow: 0 4px 20px rgba(46,77,73,.25);
+    }
+    .btn-start:hover {
+      background: var(--sage);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(46,77,73,.3);
+    }
+    .btn-start:active { transform: scale(.97); }
+
+    /* ── QUESTION SCREEN ── */
+    #screen-question {
+      background: var(--paper);
+      padding-top: 4rem;
+    }
+
+    .q-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .q-counter {
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--sand);
+      margin-bottom: .5rem;
+    }
+
+    .q-dots {
+      display: flex;
+      gap: 5px;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+    .q-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--rule);
+      transition: background .3s, transform .3s;
+    }
+    .q-dot.done { background: var(--sage); transform: scale(1.1); }
+    .q-dot.active { background: var(--teal); transform: scale(1.3); }
+
+    /* Question card */
+    .q-card-wrap {
+      width: 100%;
+      max-width: 560px;
+      perspective: 1000px;
+      margin-bottom: .8rem;
+    }
+
+    .q-card {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 2.4rem 2rem;
+      box-shadow: 0 2px 24px rgba(46,77,73,.08), 0 0 0 1px var(--rule);
+      text-align: center;
+      transition: transform .35s cubic-bezier(.4,0,.2,1), opacity .35s;
+      min-height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .q-card.slide-out-left {
+      transform: translateX(-60px) scale(.96);
+      opacity: 0;
+    }
+    .q-card.slide-in-right {
+      transform: translateX(40px);
+      opacity: 0;
+    }
+
+    .q-text {
+      font-size: clamp(1.1rem, 3.5vw, 1.35rem);
+      font-weight: 600;
+      line-height: 1.5;
+      color: var(--teal);
+    }
+
+    /* Info toggle */
+    .info-toggle {
+      display: flex;
+      align-items: center;
+      gap: .35rem;
+      font-size: .75rem;
+      font-weight: 600;
+      color: var(--sand);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: .3rem .5rem;
+      border-radius: 8px;
+      transition: color .15s, background .15s;
+      margin: 0 auto .6rem;
+    }
+    .info-toggle:hover { color: var(--mauve); background: var(--paper-warm); }
+    .info-toggle .toggle-arrow {
+      display: inline-block;
+      transition: transform .25s;
+      font-style: normal;
+    }
+    .info-toggle.open .toggle-arrow { transform: rotate(180deg); }
+
+    .info-box {
+      width: 100%;
+      max-width: 560px;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height .35s cubic-bezier(.4,0,.2,1), opacity .3s;
+      opacity: 0;
+      margin-bottom: .4rem;
+    }
+    .info-box.open {
+      max-height: 200px;
+      opacity: 1;
+    }
+    .info-box-inner {
+      background: var(--sage-pale);
+      border-left: 3px solid var(--sage);
+      border-radius: 0 10px 10px 0;
+      padding: .8rem 1rem;
+      font-size: .82rem;
+      line-height: 1.6;
+      color: var(--teal);
+    }
+
+    /* Swipe hint */
+    .swipe-hint {
+      font-size: .72rem;
+      color: var(--sand);
+      text-align: center;
+      margin-bottom: 1.2rem;
+      opacity: 1;
+      transition: opacity .5s;
+    }
+    .swipe-hint.hidden { opacity: 0; }
+
+    /* Answer buttons */
+    .answer-btns {
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+      width: 100%;
+      max-width: 380px;
+    }
+
+    .answer-btn {
+      display: flex;
+      align-items: center;
+      gap: .9rem;
+      padding: 1rem 1.4rem;
+      border-radius: 12px;
+      border: 2px solid var(--rule);
+      background: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink);
+      cursor: pointer;
+      transition: all .18s cubic-bezier(.4,0,.2,1);
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .answer-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: currentColor;
+      opacity: 0;
+      transition: opacity .15s;
+    }
+    .answer-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,.07); }
+    .answer-btn:active { transform: scale(.97); }
+
+    .answer-btn.btn-zu {
+      border-color: var(--sage);
+      color: var(--sage);
+    }
+    .answer-btn.btn-zu:hover { background: var(--sage-pale); }
+    .answer-btn.btn-zu.selected {
+      background: var(--sage);
+      color: #fff;
+      border-color: var(--sage);
+      transform: scale(1.03);
+      box-shadow: 0 6px 20px rgba(77,122,104,.3);
+    }
+
+    .answer-btn.btn-neutral {
+      border-color: var(--sand);
+      color: var(--sand);
+    }
+    .answer-btn.btn-neutral:hover { background: #f5ede6; }
+    .answer-btn.btn-neutral.selected {
+      background: var(--sand);
+      color: #fff;
+      border-color: var(--sand);
+      transform: scale(1.03);
+      box-shadow: 0 6px 20px rgba(185,160,140,.3);
+    }
+
+    .answer-btn.btn-nicht {
+      border-color: var(--rose);
+      color: var(--mauve);
+    }
+    .answer-btn.btn-nicht:hover { background: #f5eaea; }
+    .answer-btn.btn-nicht.selected {
+      background: var(--rose);
+      color: #fff;
+      border-color: var(--rose);
+      transform: scale(1.03);
+      box-shadow: 0 6px 20px rgba(201,169,169,.3);
+    }
+
+    .btn-icon {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      width: 28px;
+      text-align: center;
+    }
+    .btn-label { flex: 1; }
+
+    /* ── RESULT SCREEN ── */
+    #screen-result {
+      background: var(--paper);
+      text-align: center;
+      padding-top: 5rem;
+      padding-bottom: 3rem;
+    }
+
+    .result-badge-wrap {
+      margin-bottom: 1.4rem;
+    }
+    .result-emoji {
+      font-size: 4rem;
+      display: block;
+      animation: pop-in .5s cubic-bezier(.34,1.56,.64,1) both;
+      animation-delay: .1s;
+    }
+    @keyframes pop-in {
+      from { transform: scale(0) rotate(-10deg); opacity: 0; }
+      to   { transform: scale(1) rotate(0deg);   opacity: 1; }
+    }
+
+    .result-label {
+      display: inline-block;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--sage);
+      background: var(--sage-pale);
+      padding: .35rem .9rem;
+      border-radius: 99px;
+      margin-bottom: 1rem;
+      animation: fade-up .4s ease both;
+      animation-delay: .3s;
+    }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-title {
+      font-size: clamp(1.8rem, 6vw, 2.8rem);
+      font-weight: 800;
+      color: var(--teal);
+      letter-spacing: -.02em;
+      margin-bottom: .6rem;
+      animation: fade-up .4s ease both;
+      animation-delay: .4s;
+    }
+
+    .result-desc {
+      font-size: clamp(.9rem, 2.5vw, 1rem);
+      color: var(--mauve);
+      max-width: 420px;
+      margin: 0 auto 2rem;
+      line-height: 1.65;
+      animation: fade-up .4s ease both;
+      animation-delay: .5s;
+    }
+
+    /* Score bars */
+    .score-bars {
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto 2.4rem;
+      animation: fade-up .4s ease both;
+      animation-delay: .6s;
+    }
+
+    .score-bar-row {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      margin-bottom: .9rem;
+    }
+    .score-bar-label {
+      font-size: .82rem;
+      font-weight: 700;
+      width: 52px;
+      text-align: right;
+      flex-shrink: 0;
+      color: var(--teal);
+    }
+    .score-bar-track {
+      flex: 1;
+      height: 12px;
+      background: var(--rule);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .score-bar-fill {
+      height: 100%;
+      border-radius: 99px;
+      width: 0%;
+      transition: width 1.2s cubic-bezier(.4,0,.2,1);
+    }
+    .score-bar-fill.wald { background: linear-gradient(90deg, #2e4d49, #4d7a68); }
+    .score-bar-fill.wind { background: linear-gradient(90deg, #4d7a68, #8cc4ac); }
+    .score-bar-pct {
+      font-size: .82rem;
+      font-weight: 700;
+      width: 38px;
+      text-align: left;
+      flex-shrink: 0;
+      color: var(--mauve);
+    }
+
+    /* Result action buttons */
+    .result-actions {
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+      max-width: 340px;
+      margin: 0 auto;
+      animation: fade-up .4s ease both;
+      animation-delay: .8s;
+    }
+
+    .btn-share {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      background: var(--teal);
+      color: #fff;
+      font-size: .95rem;
+      font-weight: 700;
+      padding: .9rem 1.8rem;
+      border-radius: 99px;
+      border: none;
+      cursor: pointer;
+      transition: transform .15s, box-shadow .15s;
+      box-shadow: 0 4px 16px rgba(46,77,73,.2);
+    }
+    .btn-share:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(46,77,73,.25); }
+
+    .btn-site {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      background: transparent;
+      color: var(--sage);
+      font-size: .95rem;
+      font-weight: 600;
+      padding: .9rem 1.8rem;
+      border-radius: 99px;
+      border: 2px solid var(--sage);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .15s, color .15s;
+    }
+    .btn-site:hover { background: var(--sage-pale); }
+
+    .btn-restart {
+      font-size: .82rem;
+      color: var(--sand);
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: .4rem;
+    }
+    .btn-restart:hover { color: var(--mauve); }
+
+    /* ── DISCLAIMER ── */
+    .disclaimer {
+      font-size: .65rem;
+      color: rgba(46,77,73,.35);
+      text-align: center;
+      padding: 1.5rem 1rem .8rem;
+      line-height: 1.5;
+      max-width: 500px;
+    }
+
+    /* ── NAV BACK LINK ── */
+    .back-link {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--teal);
+      text-decoration: none;
+      background: rgba(255,255,255,.85);
+      backdrop-filter: blur(8px);
+      padding: .4rem .9rem .4rem .7rem;
+      border-radius: 99px;
+      border: 1px solid var(--rule);
+      z-index: 50;
+      transition: background .15s;
+    }
+    .back-link:hover { background: #fff; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 500px) {
+      .q-card { padding: 1.8rem 1.4rem; }
+      .answer-btn { padding: .9rem 1.1rem; font-size: .95rem; }
+      .result-actions { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="progress-track"><div id="progress-fill"></div></div>
+
+<a href="index.html" class="back-link">← Zur Website</a>
+
+<!-- ══════════════════ START SCREEN ══════════════════ -->
+<div class="screen active" id="screen-start">
+
+  <div class="start-badge">Bürgerentscheid · Heidelberg · 12. Juli 2026</div>
+
+  <h1 class="start-title">Wind<span>-O-</span>Mat</h1>
+
+  <p class="start-sub">15 Aussagen. Deine Meinung. Wo stehst du beim Windpark Lammerskopf?</p>
+
+  <div class="start-meta">
+    <div class="start-meta-item"><span class="icon">📋</span> 15 Aussagen</div>
+    <div class="start-meta-item"><span class="icon">⏱️</span> ca. 3 Minuten</div>
+    <div class="start-meta-item"><span class="icon">🔒</span> Anonym</div>
+  </div>
+
+  <button class="btn-start" onclick="startQuiz()">
+    Jetzt starten →
+  </button>
+
+</div>
+
+<!-- ══════════════════ QUESTION SCREEN ══════════════════ -->
+<div class="screen" id="screen-question">
+
+  <div class="q-header">
+    <div class="q-counter" id="q-counter">Frage 1 von 15</div>
+    <div class="q-dots" id="q-dots"></div>
+  </div>
+
+  <div class="q-card-wrap">
+    <div class="q-card" id="q-card">
+      <div class="q-text" id="q-text"></div>
+    </div>
+  </div>
+
+  <button class="info-toggle" id="info-toggle" onclick="toggleInfo()">
+    <span>ℹ️ Hintergrund</span><span class="toggle-arrow">▾</span>
+  </button>
+  <div class="info-box" id="info-box">
+    <div class="info-box-inner" id="info-text"></div>
+  </div>
+
+  <div class="swipe-hint" id="swipe-hint">← Wische oder tippe eine Antwort →</div>
+
+  <div class="answer-btns">
+    <button class="answer-btn btn-zu" onclick="answer('zu', event)">
+      <span class="btn-icon">✅</span>
+      <span class="btn-label">Stimme zu</span>
+    </button>
+    <button class="answer-btn btn-neutral" onclick="answer('neutral', event)">
+      <span class="btn-icon">🤷</span>
+      <span class="btn-label">Neutral / Weiß nicht</span>
+    </button>
+    <button class="answer-btn btn-nicht" onclick="answer('nicht', event)">
+      <span class="btn-icon">❌</span>
+      <span class="btn-label">Stimme nicht zu</span>
+    </button>
+  </div>
+
+</div>
+
+<!-- ══════════════════ RESULT SCREEN ══════════════════ -->
+<div class="screen" id="screen-result">
+
+  <div class="result-badge-wrap">
+    <span class="result-emoji" id="result-emoji">🌲</span>
+  </div>
+
+  <div class="result-label" id="result-label">Dein Ergebnis</div>
+  <h2 class="result-title" id="result-title">—</h2>
+  <p class="result-desc" id="result-desc"></p>
+
+  <div class="score-bars">
+    <div class="score-bar-row">
+      <div class="score-bar-label">🌲 Wald</div>
+      <div class="score-bar-track">
+        <div class="score-bar-fill wald" id="bar-wald"></div>
+      </div>
+      <div class="score-bar-pct" id="pct-wald">—</div>
+    </div>
+    <div class="score-bar-row">
+      <div class="score-bar-label">⚡ Wind</div>
+      <div class="score-bar-track">
+        <div class="score-bar-fill wind" id="bar-wind"></div>
+      </div>
+      <div class="score-bar-pct" id="pct-wind">—</div>
+    </div>
+  </div>
+
+  <div class="result-actions">
+    <button class="btn-share" onclick="share()">📤 Ergebnis teilen</button>
+    <a href="index.html" class="btn-site">📖 Alle Fakten auf waldoderwind</a>
+    <button class="btn-restart" onclick="restart()">Nochmal starten</button>
+  </div>
+
+  <p class="disclaimer">
+    Privates, nicht-kommerzielles Informationsangebot zum Bürgerentscheid Heidelberg 12. Juli 2026.<br/>
+    Keine Parteifinanzierung · Keine Nutzerdaten · Kontakt: waldoderwind@proton.me<br/>
+    Anonym aus Gründen des Schutzes vor politischer Einschüchterung.
+  </p>
+
+</div>
+
+<script>
+// ── QUESTIONS ─────────────────────────────────────────────────────────
+const questions = [
+  {
+    text: "Klimaschutz ist wichtiger als der Schutz eines einzelnen Waldgebiets.",
+    side: 'wind',
+    info: "Der Lammerskopf liegt im Landschaftsschutzgebiet Odenwald. Befürworter argumentieren, dass Windkraft langfristig mehr CO₂ einspart als der Wald bindet — Kritiker sehen im Wald selbst einen wertvollen CO₂-Speicher."
+  },
+  {
+    text: "Windräder von 250 Metern Höhe gehören nicht in ein Landschaftsschutzgebiet.",
+    side: 'wald',
+    info: "Die geplanten Anlagen wären mit ca. 250 m Gesamthöhe zu den größten Deutschlands. Das Gebiet ist als Landschaftsschutzgebiet ausgewiesen — Windkraft ist dort nicht grundsätzlich verboten, aber umstritten."
+  },
+  {
+    text: "Heidelberg sollte seinen eigenen Strom lokal erzeugen, statt ihn von woanders zu beziehen.",
+    side: 'wind',
+    info: "Derzeit erzeugt Heidelberg nur einen Bruchteil seines Strombedarfs lokal. Sieben Windräder am Lammerskopf könnten laut Planung rund 50.000 Haushalte mit Strom versorgen."
+  },
+  {
+    text: "Der Eingriff in den Wald wiegt schwerer als der Nutzen für das Klima.",
+    side: 'wald',
+    info: "Für Fundamente und Zuwegung müssen mehrere Hektar Wald gerodet werden. Wie schnell die Windräder diese CO₂-Emissionen durch saubere Energie wieder ausgleichen, hängt vom Windertrag ab und ist unter Experten umstritten."
+  },
+  {
+    text: "Es ist richtig, dass Bürgerinnen und Bürger direkt über Großprojekte wie diesen abstimmen können.",
+    side: 'neutral',
+    info: "Der Bürgerentscheid am 12. Juli 2026 wurde von der Stadtverwaltung selbst vorgeschlagen. Er ist rechtlich bindend für drei Jahre, sofern mindestens 20 % der Wahlberechtigten abstimmen."
+  },
+  {
+    text: "Sieben Windräder im Odenwald würden das Landschaftsbild dauerhaft und zu stark verändern.",
+    side: 'wald',
+    info: "Die Stadt Heidelberg bietet Augmented-Reality-Visualisierungen an, die zeigen, wie die Anlagen von verschiedenen Standorten aus wirken würden. Der nächste Siedlungsbereich liegt ca. 1,5 km entfernt."
+  },
+  {
+    text: "Erneuerbare Energie hat Vorrang — auch wenn dafür Kompromisse beim Naturschutz nötig sind.",
+    side: 'wind',
+    info: "Seit 2022 stuft das Bundesgesetz erneuerbare Energien als überragendes öffentliches Interesse ein — auch gegenüber Naturschutzbelangen. Ob das für diesen konkreten Standort gilt, ist rechtlich nicht abschließend geklärt."
+  },
+  {
+    text: "Die geplanten Windräder sind zu nah an Wohngebieten und Erholungsflächen.",
+    side: 'wald',
+    info: "Der Mindestabstand zu Wohnbebauung beträgt in Baden-Württemberg 700 m. Die nächsten Häuser liegen laut Planung weiter entfernt — beliebte Wanderwege und Erholungsgebiete befinden sich jedoch in unmittelbarer Nähe der geplanten Standorte."
+  },
+  {
+    text: "Heidelberg sollte seine Klimaziele auch dann verfolgen, wenn es unbequem wird.",
+    side: 'wind',
+    info: "Heidelberg hat sich als Klimaschutzstadt verpflichtet, bis 2050 klimaneutral zu werden. Der Windpark Lammerskopf ist eines der zentralen Projekte in der städtischen Klimastrategie."
+  },
+  {
+    text: "Naturschutz und Windkraft schließen sich an diesem konkreten Standort aus.",
+    side: 'wald',
+    info: "Im Planungsgebiet leben geschützte Arten wie Rotmilan und verschiedene Fledermausarten. Befürworter sagen, durch Abschaltzeiten und technische Schutzmaßnahmen lasse sich der Artenschutz gewährleisten."
+  },
+  {
+    text: "Wenn der Wald für den Windpark gerodet wird, ist der CO₂-Schaden jahrzehntelang nicht mehr gut zu machen.",
+    side: 'wald',
+    info: "Für Fundamente, Zuwegung und Kranstellflächen werden laut Planung mehrere Hektar Wald dauerhaft beansprucht. Zusätzlich entstehen beim Bau und bei der Herstellung der Anlagen erhebliche CO₂-Emissionen."
+  },
+  {
+    text: "Windkraft im Odenwald ist sinnvoller als weitere Solar- oder Biogasanlagen in der Region.",
+    side: 'wind',
+    info: "Der Odenwald hat vergleichsweise gute Windverhältnisse. Alternativer Flächen für erneuerbare Energie — etwa Freiflächen-Solar — sind in der Region begrenzt. Kritiker bevorzugen den Ausbau von Photovoltaik auf bereits versiegelten Flächen."
+  },
+  {
+    text: "Ein Bürgerwindpark, an dem Heidelberger Bürger Anteile erwerben können, ist das richtige Modell für lokale Energieerzeugung.",
+    side: 'wind',
+    info: "Das Projekt ist als Bürgerwindpark geplant: Heidelberger Bürgerinnen und Bürger können sich finanziell beteiligen und an den Erträgen partizipieren. Kritiker bezweifeln, ob dieses Modell die Naturschutzbedenken aufwiegt."
+  },
+  {
+    text: "Auch wenn ich persönlich skeptisch bin — der Klimawandel zwingt uns zu solchen Entscheidungen.",
+    side: 'wind',
+    info: "Deutschland muss laut Klimaschutzgesetz bis 2045 klimaneutral sein. Dafür braucht es laut Bundesregierung eine massive Ausweitung der Windkraft — auch an Standorten, die bisher nicht genutzt wurden."
+  },
+  {
+    text: "Das Projekt sollte grundsätzlich neu gedacht werden — an einem anderen, besser geeigneten Standort.",
+    side: 'wald',
+    info: "Alternative Standorte wurden laut Stadtverwaltung geprüft. Der Lammerskopf wurde dabei als am besten geeignet eingestuft. Kritiker bezweifeln, ob die Standortsuche umfassend und transparent genug war."
+  },
+];
+
+// ── STATE ──────────────────────────────────────────────────────────────
+let current = 0;
+let waldScore = 0;
+let windScore = 0;
+let swipeHintShown = false;
+let touchStartX = 0;
+let touchStartY = 0;
+let answering = false;
+
+// ── INIT ───────────────────────────────────────────────────────────────
+function startQuiz() {
+  current = 0; waldScore = 0; windScore = 0; answering = false;
+  buildDots();
+  showScreen('screen-question');
+  renderQuestion();
+  updateProgress();
+  document.getElementById('info-text').textContent = questions[0].info;
+}
+
+function buildDots() {
+  const wrap = document.getElementById('q-dots');
+  wrap.innerHTML = '';
+  questions.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'q-dot' + (i === 0 ? ' active' : '');
+    d.id = `dot-${i}`;
+    wrap.appendChild(d);
+  });
+}
+
+function renderQuestion(direction = 'none') {
+  const card = document.getElementById('q-card');
+  const q = questions[current];
+
+  // slide in
+  card.style.transition = 'none';
+  card.style.transform = direction === 'next' ? 'translateX(40px)' : 'translateX(-40px)';
+  card.style.opacity = '0';
+
+  document.getElementById('q-text').textContent = q.text;
+  document.getElementById('q-counter').textContent = `Frage ${current + 1} von ${questions.length}`;
+
+  // reset button states + info box
+  document.querySelectorAll('.answer-btn').forEach(b => b.classList.remove('selected'));
+  resetInfo();
+
+  // animate in
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      card.style.transition = 'transform .35s cubic-bezier(.4,0,.2,1), opacity .35s';
+      card.style.transform = 'translateX(0)';
+      card.style.opacity = '1';
+    });
+  });
+
+  // update dots
+  for (let i = 0; i < questions.length; i++) {
+    const dot = document.getElementById(`dot-${i}`);
+    dot.className = 'q-dot' + (i < current ? ' done' : i === current ? ' active' : '');
+  }
+
+  updateProgress();
+}
+
+function updateProgress() {
+  const pct = (current / questions.length) * 100;
+  document.getElementById('progress-fill').style.width = pct + '%';
+}
+
+// ── ANSWER ─────────────────────────────────────────────────────────────
+function answer(choice, evt) {
+  if (answering) return;
+  answering = true;
+
+  // hide swipe hint after first answer
+  if (!swipeHintShown) {
+    document.getElementById('swipe-hint').classList.add('hidden');
+    swipeHintShown = true;
+  }
+
+  // visual feedback on button
+  const btnMap = { zu: '.btn-zu', neutral: '.btn-neutral', nicht: '.btn-nicht' };
+  const btn = document.querySelector(btnMap[choice]);
+  if (btn) btn.classList.add('selected');
+
+  // particle burst
+  if (evt) {
+    const rect = btn.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const colors = {
+      zu: '#4d7a68',
+      neutral: '#b9a08c',
+      nicht: '#c9a9a9'
+    };
+    burst(cx, cy, colors[choice]);
+  }
+
+  // score
+  const q = questions[current];
+  if (q.side !== 'neutral') {
+    if (choice === 'zu') {
+      if (q.side === 'wind') windScore += 2; else waldScore += 2;
+    } else if (choice === 'nicht') {
+      if (q.side === 'wind') waldScore += 2; else windScore += 2;
+    } else {
+      windScore += 1; waldScore += 1;
+    }
+  }
+
+  // next question or result
+  setTimeout(() => {
+    current++;
+    if (current < questions.length) {
+      renderQuestion('next');
+      answering = false;
+    } else {
+      // fill progress bar fully
+      document.getElementById('progress-fill').style.width = '100%';
+      setTimeout(() => showResult(), 400);
+    }
+  }, 380);
+}
+
+// ── PARTICLES ──────────────────────────────────────────────────────────
+function burst(x, y, color) {
+  for (let i = 0; i < 10; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'particle';
+    dot.style.cssText = `left:${x}px;top:${y}px;background:${color};position:fixed;width:7px;height:7px;border-radius:50%;pointer-events:none;z-index:9999;`;
+    document.body.appendChild(dot);
+    const angle = (i / 10) * Math.PI * 2;
+    const dist = 35 + Math.random() * 35;
+    const keyframes = [
+      { transform: `translate(-50%,-50%) scale(1)`, opacity: 1 },
+      { transform: `translate(calc(-50% + ${Math.cos(angle)*dist}px), calc(-50% + ${Math.sin(angle)*dist}px)) scale(0)`, opacity: 0 }
+    ];
+    const anim = dot.animate(keyframes, { duration: 480 + Math.random()*120, easing: 'ease-out' });
+    anim.onfinish = () => dot.remove();
+  }
+}
+
+// ── RESULT ─────────────────────────────────────────────────────────────
+const resultProfiles = [
+  {
+    minWind: 0, maxWind: 25,
+    emoji: '🌲',
+    label: 'Dein Ergebnis',
+    title: 'Klar für den Wald',
+    desc: 'Für dich ist es eindeutig: Dieser Eingriff in das Landschaftsschutzgebiet geht zu weit. Naturschutz hat für dich an diesem Standort klare Priorität — und du zweifelst daran, dass der Klimanutzen den Schaden aufwiegt.'
+  },
+  {
+    minWind: 25, maxWind: 42,
+    emoji: '🌿',
+    label: 'Dein Ergebnis',
+    title: 'Eher für den Wald',
+    desc: 'Du siehst die Argumente für erneuerbare Energie, aber der Standort mitten im Schutzgebiet überzeugt dich nicht. Du würdest dem Projekt in dieser Form eher nicht zustimmen.'
+  },
+  {
+    minWind: 42, maxWind: 58,
+    emoji: '⚖️',
+    label: 'Dein Ergebnis',
+    title: 'Ausgeglichen',
+    desc: 'Du siehst beide Seiten — und das zurecht. Der Windpark Lammerskopf ist eine echte Abwägungsfrage zwischen Klimaschutz und Naturschutz. Du bist noch nicht entschieden. Gut so — informier dich weiter.'
+  },
+  {
+    minWind: 58, maxWind: 75,
+    emoji: '🌬️',
+    label: 'Dein Ergebnis',
+    title: 'Eher für den Windpark',
+    desc: 'Du befürwortest erneuerbare Energie und siehst im Windpark eine wichtige Chance. Die Naturschutzbedenken nimmst du ernst, aber sie überwiegen für dich nicht. Tendenziell würdest du Ja stimmen.'
+  },
+  {
+    minWind: 75, maxWind: 101,
+    emoji: '⚡',
+    label: 'Dein Ergebnis',
+    title: 'Klar für den Windpark',
+    desc: 'Für dich ist klar: Klimaschutz hat Vorrang. Der Windpark Lammerskopf ist für dich ein notwendiger Schritt, auch wenn er mit Eingriffen in die Natur verbunden ist. Du würdest dem Projekt zustimmen.'
+  },
+];
+
+function showResult() {
+  const total = waldScore + windScore;
+  const windPct = total === 0 ? 50 : Math.round((windScore / total) * 100);
+  const waldPct = 100 - windPct;
+
+  const profile = resultProfiles.find(p => windPct >= p.minWind && windPct < p.maxWind)
+    || resultProfiles[resultProfiles.length - 1];
+
+  document.getElementById('result-emoji').textContent = profile.emoji;
+  document.getElementById('result-label').textContent = profile.label;
+  document.getElementById('result-title').textContent = profile.title;
+  document.getElementById('result-desc').textContent = profile.desc;
+
+  showScreen('screen-result');
+
+  // animate bars after a short delay
+  setTimeout(() => {
+    document.getElementById('bar-wald').style.width = waldPct + '%';
+    document.getElementById('bar-wind').style.width = windPct + '%';
+
+    // count-up numbers
+    animateCount('pct-wald', waldPct);
+    animateCount('pct-wind', windPct);
+  }, 300);
+}
+
+function animateCount(id, target) {
+  const el = document.getElementById(id);
+  let current = 0;
+  const duration = 1200;
+  const start = performance.now();
+  function step(now) {
+    const t = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - t, 3);
+    current = Math.round(ease * target);
+    el.textContent = current + '%';
+    if (t < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+// ── SHARE ──────────────────────────────────────────────────────────────
+function share() {
+  const title = document.getElementById('result-title').textContent;
+  const text = `Mein Wind-O-Mat Ergebnis: „${title}" — Mach den Test: Wo stehst du beim Bürgerentscheid Windpark Lammerskopf Heidelberg?`;
+  const url = window.location.href;
+  if (navigator.share) {
+    navigator.share({ title: 'Wind-O-Mat', text, url });
+  } else {
+    navigator.clipboard.writeText(text + '\n' + url)
+      .then(() => alert('Text kopiert — teile ihn auf WhatsApp oder Instagram!'))
+      .catch(() => alert('Link: ' + url));
+  }
+}
+
+// ── RESTART ────────────────────────────────────────────────────────────
+function restart() {
+  swipeHintShown = false;
+  document.getElementById('swipe-hint').classList.remove('hidden');
+  document.getElementById('bar-wald').style.width = '0%';
+  document.getElementById('bar-wind').style.width = '0%';
+  startQuiz();
+}
+
+// ── SCREEN SWITCH ──────────────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ── INFO TOGGLE ────────────────────────────────────────────────────────
+function toggleInfo() {
+  const box = document.getElementById('info-box');
+  const btn = document.getElementById('info-toggle');
+  const isOpen = box.classList.contains('open');
+  box.classList.toggle('open', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+}
+
+function resetInfo() {
+  document.getElementById('info-box').classList.remove('open');
+  document.getElementById('info-toggle').classList.remove('open');
+  document.getElementById('info-text').textContent = questions[current].info;
+}
+
+// ── SWIPE ──────────────────────────────────────────────────────────────
+document.addEventListener('touchstart', e => {
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+}, { passive: true });
+
+document.addEventListener('touchend', e => {
+  if (!document.getElementById('screen-question').classList.contains('active')) return;
+  if (answering) return;
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  const dy = e.changedTouches[0].clientY - touchStartY;
+  if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 55) {
+    if (dx > 0) answer('zu', null);
+    else answer('nicht', null);
+  }
+}, { passive: true });
+</script>
+
+</body>
+</html>
