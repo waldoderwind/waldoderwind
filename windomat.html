@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Wind-O-Mat — Bürgerentscheid Lammerskopf Heidelberg</title>
-  <meta name="description" content="Der Wind-O-Mat: 15 Aussagen, deine Meinung — wo stehst du beim Bürgerentscheid Windpark Lammerskopf Heidelberg?"/>
+  <title>Entscheid-O-Mat — Bürgerentscheid Lammerskopf Heidelberg</title>
+  <meta name="description" content="Der Entscheid-O-Mat: 11 Aussagen, deine Meinung — wo stehst du beim Bürgerentscheid Windpark Lammerskopf Heidelberg?"/>
   <style>
     :root {
       --teal:       #2e4d49;
@@ -594,13 +594,13 @@
 
   <div class="start-badge">Bürgerentscheid · Heidelberg · 12. Juli 2026</div>
 
-  <h1 class="start-title">Wind<span>-O-</span>Mat</h1>
+  <h1 class="start-title">Entscheid<span>-O-</span>Mat</h1>
 
-  <p class="start-sub">15 Aussagen. Deine Meinung. Wo stehst du beim Windpark Lammerskopf?</p>
+  <p class="start-sub">11 Aussagen. Deine Meinung. Wo stehst du beim Windpark Lammerskopf?</p>
 
   <div class="start-meta">
-    <div class="start-meta-item"><span class="icon">📋</span> 15 Aussagen</div>
-    <div class="start-meta-item"><span class="icon">⏱️</span> ca. 3 Minuten</div>
+    <div class="start-meta-item"><span class="icon">📋</span> 11 Aussagen</div>
+    <div class="start-meta-item"><span class="icon">⏱️</span> ca. 2 Minuten</div>
     <div class="start-meta-item"><span class="icon">🔒</span> Anonym</div>
   </div>
 
@@ -696,79 +696,59 @@
 // ── QUESTIONS ─────────────────────────────────────────────────────────
 const questions = [
   {
-    text: "Klimaschutz ist wichtiger als der Schutz eines einzelnen Waldgebiets.",
-    side: 'wind',
-    info: "Der Lammerskopf liegt im Landschaftsschutzgebiet Odenwald. Befürworter argumentieren, dass Windkraft langfristig mehr CO₂ einspart als der Wald bindet — Kritiker sehen im Wald selbst einen wertvollen CO₂-Speicher."
-  },
-  {
-    text: "Windräder von 250 Metern Höhe gehören nicht in ein Landschaftsschutzgebiet.",
+    text: "Der Schutz zusammenhängender Wald- und Naturflächen sollte bei Infrastrukturprojekten grundsätzlich ein hohes Gewicht haben.",
     side: 'wald',
-    info: "Die geplanten Anlagen wären mit ca. 250 m Gesamthöhe zu den größten Deutschlands. Das Gebiet ist als Landschaftsschutzgebiet ausgewiesen — Windkraft ist dort nicht grundsätzlich verboten, aber umstritten."
+    info: "Der Lammerskopf ist Teil eines FFH-Schutzgebiets (Fauna-Flora-Habitat) — einer EU-Schutzkategorie für besonders wertvolle Lebensräume. Solche Gebiete genießen besonderen gesetzlichen Schutz, der Eingriffe nur bei überwiegendem öffentlichem Interesse erlaubt."
   },
   {
-    text: "Heidelberg sollte seinen eigenen Strom lokal erzeugen, statt ihn von woanders zu beziehen.",
+    text: "Für den Ausbau erneuerbarer Energien können Eingriffe in Waldgebiete grundsätzlich gerechtfertigt sein.",
     side: 'wind',
-    info: "Derzeit erzeugt Heidelberg nur einen Bruchteil seines Strombedarfs lokal. Sieben Windräder am Lammerskopf könnten laut Planung rund 50.000 Haushalte mit Strom versorgen."
+    info: "Seit 2022 stuft das Bundesgesetz erneuerbare Energien als 'überragendes öffentliches Interesse' ein — auch gegenüber Naturschutz. Eine Windkraftanlage am Lammerskopf könnte laut Planung rund 17,5 Mio. kWh pro Jahr erzeugen — genug für ca. 5.000 Haushalte."
   },
   {
-    text: "Der Eingriff in den Wald wiegt schwerer als der Nutzen für das Klima.",
+    text: "Windenergieanlagen sollten vorrangig an Standorten außerhalb von Schutz- oder Waldgebieten errichtet werden, wenn dort vergleichbare Bedingungen vorliegen.",
     side: 'wald',
-    info: "Für Fundamente und Zuwegung müssen mehrere Hektar Wald gerodet werden. Wie schnell die Windräder diese CO₂-Emissionen durch saubere Energie wieder ausgleichen, hängt vom Windertrag ab und ist unter Experten umstritten."
+    info: "Ob tatsächlich gleichwertige Alternativstandorte existieren, ist umstritten. Die Stadt hat nach eigenen Angaben verschiedene Standorte geprüft und den Lammerskopf als einzigen realistischen auf Heidelberger Gemarkung eingestuft. Bürgerinitiativen bezweifeln, dass diese Suche umfassend genug war."
   },
   {
-    text: "Es ist richtig, dass Bürgerinnen und Bürger direkt über Großprojekte wie diesen abstimmen können.",
+    text: "Der Standort Lammerskopf sollte nur genutzt werden, wenn keine ökologisch und technisch gleichwertigen Alternativen bestehen.",
+    side: 'wald',
+    info: "Der Regionalverband Rhein-Neckar-Odenwald (VRRN) hat sich nicht an dem Projekt beteiligt. Die Suche nach Alternativstandorten ist ein zentraler Streitpunkt: Kritiker sehen ungeprüfte Möglichkeiten, die Stadt sieht den Lammerskopf als alternativlos."
+  },
+  {
+    text: "Veränderungen des Landschaftsbildes durch Windenergieanlagen sind ein vertretbarer Beitrag zur Energiewende.",
+    side: 'wind',
+    info: "Laut Projektgemeinschaft sind von der Theodor-Heuss-Brücke aus vier Windräder sichtbar. Die Anlagen haben eine Gesamthöhe von 250 m (Nabenhöhe: 179 m) — mehr als doppelt so hoch wie der Fernmeldeturm auf dem Königsstuhl. Wie sie genau wirken, zeigen AR-Visualisierungen vor Ort."
+  },
+  {
+    text: "Der Schutz von Tier- und Pflanzenarten im betroffenen Gebiet sollte bei der Entscheidung über den Bau eines Windparks ein zentrales Kriterium sein.",
+    side: 'wald',
+    info: "Im Planungsgebiet leben geschützte Arten wie Rotmilan, Schwarzstorch und mehrere Fledermausarten. Zum Schutz der Fledermäuse sind Abschaltzeiten geplant — sie reduzieren den Ertrag von rechnerisch über 20 auf 17,5 Mio. kWh/Jahr pro Anlage."
+  },
+  {
+    text: "Die wirtschaftliche Tragfähigkeit eines Windenergieprojekts sollte ein entscheidendes Kriterium bei der Standortwahl sein.",
     side: 'neutral',
-    info: "Der Bürgerentscheid am 12. Juli 2026 wurde von der Stadtverwaltung selbst vorgeschlagen. Er ist rechtlich bindend für drei Jahre, sofern mindestens 20 % der Wahlberechtigten abstimmen."
+    info: "Die Rentabilität ist umstritten: Kritiker sprechen von einem 'Schwachwindgebiet' mit nur 20% Auslastung. Die Projektgemeinschaft rechnet mit 17,5 Mio. kWh Netto-Jahresertrag pro Anlage. Der Regionalverband VRRN hat sich u.a. wegen Rentabilitätszweifeln nicht beteiligt."
   },
   {
-    text: "Sieben Windräder im Odenwald würden das Landschaftsbild dauerhaft und zu stark verändern.",
-    side: 'wald',
-    info: "Die Stadt Heidelberg bietet Augmented-Reality-Visualisierungen an, die zeigen, wie die Anlagen von verschiedenen Standorten aus wirken würden. Der nächste Siedlungsbereich liegt ca. 1,5 km entfernt."
+    text: "Bei stark umstrittenen Infrastrukturprojekten sollte die Bevölkerung frühzeitig und umfassend in die Entscheidungsprozesse eingebunden werden.",
+    side: 'neutral',
+    info: "Der Bürgerentscheid am 12. Juli 2026 wurde von der Stadtverwaltung selbst vorgeschlagen und ist rechtlich bindend für drei Jahre — sofern mindestens 20 % der Wahlberechtigten abstimmen. Vorher fanden Infoveranstaltungen in mehreren Stadtteilen statt."
   },
   {
-    text: "Erneuerbare Energie hat Vorrang — auch wenn dafür Kompromisse beim Naturschutz nötig sind.",
+    text: "Der Ausbau regionaler erneuerbarer Energieerzeugung hat hohe Priorität, auch wenn dies lokale Konflikte auslöst.",
     side: 'wind',
-    info: "Seit 2022 stuft das Bundesgesetz erneuerbare Energien als überragendes öffentliches Interesse ein — auch gegenüber Naturschutzbelangen. Ob das für diesen konkreten Standort gilt, ist rechtlich nicht abschließend geklärt."
+    info: "Heidelberg erzeugt derzeit nur einen Bruchteil seines Strombedarfs lokal. Sieben Windräder am Lammerskopf würden laut Planung rund 35.000 Haushalte versorgen. Das Projekt ist als Bürgerwindpark geplant — Heidelberger können sich finanziell beteiligen."
   },
   {
-    text: "Die geplanten Windräder sind zu nah an Wohngebieten und Erholungsflächen.",
+    text: "Im konkreten Fall des Lammerskopfs sollten Natur- und Klimaschutz gleichrangig gegeneinander abgewogen werden.",
+    side: 'neutral',
+    info: "Die Stadt rechnet: 1 ha Wald bindet ca. 12 t CO₂/Jahr — eine Windkraftanlage spart ca. 7.000 t CO₂/Jahr. Das entspricht einem Faktor von 580. Gegner bezweifeln diese Rechnung und verweisen auf den Energieaufwand für Bau, Fundamente und 5.850 LKW-Fahrten durch den Wald."
+  },
+  {
+    text: "Wenn Sie zwischen dem Erhalt des bestehenden Waldes und der Errichtung des Windparks am Lammerskopf wählen müssten, hätte für Sie der Erhalt des Waldes Vorrang.",
     side: 'wald',
-    info: "Der Mindestabstand zu Wohnbebauung beträgt in Baden-Württemberg 700 m. Die nächsten Häuser liegen laut Planung weiter entfernt — beliebte Wanderwege und Erholungsgebiete befinden sich jedoch in unmittelbarer Nähe der geplanten Standorte."
-  },
-  {
-    text: "Heidelberg sollte seine Klimaziele auch dann verfolgen, wenn es unbequem wird.",
-    side: 'wind',
-    info: "Heidelberg hat sich als Klimaschutzstadt verpflichtet, bis 2050 klimaneutral zu werden. Der Windpark Lammerskopf ist eines der zentralen Projekte in der städtischen Klimastrategie."
-  },
-  {
-    text: "Naturschutz und Windkraft schließen sich an diesem konkreten Standort aus.",
-    side: 'wald',
-    info: "Im Planungsgebiet leben geschützte Arten wie Rotmilan und verschiedene Fledermausarten. Befürworter sagen, durch Abschaltzeiten und technische Schutzmaßnahmen lasse sich der Artenschutz gewährleisten."
-  },
-  {
-    text: "Wenn der Wald für den Windpark gerodet wird, ist der CO₂-Schaden jahrzehntelang nicht mehr gut zu machen.",
-    side: 'wald',
-    info: "Für Fundamente, Zuwegung und Kranstellflächen werden laut Planung mehrere Hektar Wald dauerhaft beansprucht. Zusätzlich entstehen beim Bau und bei der Herstellung der Anlagen erhebliche CO₂-Emissionen."
-  },
-  {
-    text: "Windkraft im Odenwald ist sinnvoller als weitere Solar- oder Biogasanlagen in der Region.",
-    side: 'wind',
-    info: "Der Odenwald hat vergleichsweise gute Windverhältnisse. Alternativer Flächen für erneuerbare Energie — etwa Freiflächen-Solar — sind in der Region begrenzt. Kritiker bevorzugen den Ausbau von Photovoltaik auf bereits versiegelten Flächen."
-  },
-  {
-    text: "Ein Bürgerwindpark, an dem Heidelberger Bürger Anteile erwerben können, ist das richtige Modell für lokale Energieerzeugung.",
-    side: 'wind',
-    info: "Das Projekt ist als Bürgerwindpark geplant: Heidelberger Bürgerinnen und Bürger können sich finanziell beteiligen und an den Erträgen partizipieren. Kritiker bezweifeln, ob dieses Modell die Naturschutzbedenken aufwiegt."
-  },
-  {
-    text: "Auch wenn ich persönlich skeptisch bin — der Klimawandel zwingt uns zu solchen Entscheidungen.",
-    side: 'wind',
-    info: "Deutschland muss laut Klimaschutzgesetz bis 2045 klimaneutral sein. Dafür braucht es laut Bundesregierung eine massive Ausweitung der Windkraft — auch an Standorten, die bisher nicht genutzt wurden."
-  },
-  {
-    text: "Das Projekt sollte grundsätzlich neu gedacht werden — an einem anderen, besser geeigneten Standort.",
-    side: 'wald',
-    info: "Alternative Standorte wurden laut Stadtverwaltung geprüft. Der Lammerskopf wurde dabei als am besten geeignet eingestuft. Kritiker bezweifeln, ob die Standortsuche umfassend und transparent genug war."
+    info: "Das ist die direkte Kernfrage des Bürgerentscheids. Umstritten ist auch das Ausmaß der Rodung: Bürgerinitiativen sprechen von 40 ha (56 Fußballfelder) — die Stadt und Projektgemeinschaft von 8–12 ha (1–1,5 ha pro Anlage, davon ein Drittel nach Bau wieder aufforstbar)."
   },
 ];
 
