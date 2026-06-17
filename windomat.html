@@ -88,6 +88,16 @@
       mix-blend-mode: multiply;
     }
 
+    .start-owl {
+      width: 180px;
+      height: auto;
+      mix-blend-mode: multiply;
+      margin-bottom: 1.2rem;
+    }
+    @media (max-width: 480px) {
+      .start-owl { width: 130px; }
+    }
+
     .start-badge {
       display: inline-block;
       background: var(--sage-pale);
@@ -594,6 +604,8 @@
 
   <div class="start-badge">Bürgerentscheid · Heidelberg · 12. Juli 2026</div>
 
+  <img class="start-owl" src="eule.jpg" alt="Eule mit Stimmzettel, Baum und Windrad">
+
   <h1 class="start-title">Entscheid<span>-O-</span>Mat</h1>
 
   <p class="start-sub">11 Aussagen. Deine Meinung. Wo stehst du beim Windpark Lammerskopf?</p>
@@ -614,7 +626,7 @@
 <div class="screen" id="screen-question">
 
   <div class="q-header">
-    <div class="q-counter" id="q-counter">Frage 1 von 15</div>
+    <div class="q-counter" id="q-counter">Frage 1 von 11</div>
     <div class="q-dots" id="q-dots"></div>
   </div>
 
@@ -977,10 +989,10 @@ function animateCount(id, target) {
 // ── SHARE ──────────────────────────────────────────────────────────────
 function share() {
   const title = document.getElementById('result-title').textContent;
-  const text = `Mein Wind-O-Mat Ergebnis: „${title}" — Mach den Test: Wo stehst du beim Bürgerentscheid Windpark Lammerskopf Heidelberg?`;
+  const text = `Mein Entscheid-O-Mat Ergebnis: „${title}" — Mach den Test: Wo stehst du beim Bürgerentscheid Windpark Lammerskopf Heidelberg?`;
   const url = window.location.href;
   if (navigator.share) {
-    navigator.share({ title: 'Wind-O-Mat', text, url });
+    navigator.share({ title: 'Entscheid-O-Mat', text, url });
   } else {
     navigator.clipboard.writeText(text + '\n' + url)
       .then(() => alert('Text kopiert — teile ihn auf WhatsApp oder Instagram!'))

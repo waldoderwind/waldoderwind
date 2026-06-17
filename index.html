@@ -78,10 +78,7 @@
       box-shadow: 0 0 0 3px var(--green-pale);
     }
     .nav-title span { color: var(--ink-mid); font-weight: 600; }
-    .nav-logo {
-      height: 36px; width: auto; display: block;
-      mix-blend-mode: multiply;
-    }
+
     .nav-links {
       display: flex; gap: .25rem; list-style: none;
       align-items: center;
@@ -897,9 +894,7 @@
 <!-- NAV -->
 <nav id="mainNav">
   <div class="nav-inner">
-    <a class="nav-title" href="#top">
-      <img src="logo2.png" alt="WaldoderWind" class="nav-logo">
-    </a>
+    <a class="nav-title" href="#top"></a>
     <button class="nav-burger" onclick="document.getElementById('mobileMenu').classList.add('open')" aria-label="Menü öffnen">
       <svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect width="22" height="2" rx="1" fill="currentColor"/>
@@ -1225,17 +1220,17 @@
 </section>
 
 <!-- PHOTO BREAK: Windräder im Wald -->
-<div style="position:relative; overflow:hidden; max-height:420px;">
+<div style="position:relative; overflow:hidden;">
   <img src="bild-windraeder-wald.jpg"
        alt="Windräder im deutschen Wald mit Zufahrtsstraße — Beispielbild eines vergleichbaren Standorts"
-       style="width:100%; height:420px; object-fit:cover; object-position:center 30%; display:block;">
-  <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(24,46,43,0.78) 0%, rgba(24,46,43,0.08) 50%, transparent 100%);"></div>
-  <div style="position:absolute; bottom:0; left:0; right:0; padding:1.5rem 2rem; max-width:900px; margin:0 auto;">
-    <p style="font-family:Georgia,serif; font-size:clamp(1rem,2.5vw,1.4rem); color:#fff; font-style:italic; line-height:1.5; margin-bottom:.4rem;">
+       style="width:100%; height:clamp(220px,40vw,420px); object-fit:cover; object-position:center 30%; display:block;">
+  <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(24,46,43,0.82) 0%, rgba(24,46,43,0.08) 50%, transparent 100%);"></div>
+  <div style="position:absolute; bottom:0; left:0; right:0; padding:clamp(.8rem,3vw,1.5rem) clamp(1rem,4vw,2rem);">
+    <p style="font-family:Georgia,serif; font-size:clamp(.9rem,2.5vw,1.3rem); color:#fff; font-style:italic; line-height:1.5; margin-bottom:.4rem; max-width:780px;">
       „Windkraft im Wald bedeutet dauerhaft breite Zufahrtsstraßen — der Wald wächst dort nicht mehr nach."
     </p>
-    <p style="font-family:-apple-system,sans-serif; font-size:.72rem; color:rgba(255,255,255,0.55); letter-spacing:.04em;">
-      KI-GENERIERTES BILD · ZEIGT EINEN VERGLEICHBAREN STANDORT · KEIN FOTO VOM LAMMERSKOPF
+    <p style="font-family:-apple-system,sans-serif; font-size:.68rem; color:rgba(255,255,255,0.5); letter-spacing:.04em;">
+      KI-GENERIERTES BILD · VERGLEICHBARER STANDORT · KEIN FOTO VOM LAMMERSKOPF
     </p>
   </div>
 </div>
@@ -1371,14 +1366,14 @@
 </section>
 
 <!-- PHOTO BREAK: Wald / Naturschutz -->
-<div style="position:relative; overflow:hidden; max-height:340px;">
+<div style="position:relative; overflow:hidden;">
   <img src="bild-wald-natur.jpg"
        alt="Naturnaher Mischwald — wie der Heidelberger Stadtwald am Lammerskopf"
-       style="width:100%; height:340px; object-fit:cover; object-position:center 40%; display:block;">
-  <div style="position:absolute; inset:0; background:linear-gradient(to right, rgba(24,46,43,0.68) 0%, rgba(24,46,43,0.08) 60%, transparent 100%);"></div>
-  <div style="position:absolute; top:50%; left:2rem; transform:translateY(-50%); max-width:480px;">
-    <div style="font-family:-apple-system,sans-serif; font-size:.68rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--green-mid); margin-bottom:.5rem;">FFH-Schutzgebiet</div>
-    <p style="font-family:Georgia,serif; font-size:clamp(.95rem,2vw,1.2rem); color:#fff; line-height:1.55;">
+       style="width:100%; height:clamp(200px,35vw,340px); object-fit:cover; object-position:center 40%; display:block;">
+  <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(24,46,43,0.72) 0%, rgba(24,46,43,0.55) 50%, rgba(24,46,43,0.72) 100%);"></div>
+  <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:1rem clamp(1rem,5vw,3rem);">
+    <div style="font-family:-apple-system,sans-serif; font-size:.68rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#9ac4b4; margin-bottom:.5rem;">FFH-Schutzgebiet</div>
+    <p style="font-family:Georgia,serif; font-size:clamp(.9rem,2.5vw,1.2rem); color:#fff; line-height:1.55; max-width:560px;">
       Der Lammerskopf liegt im EU-Natura-2000-Schutzgebiet — einem der artenreichsten Waldgebiete rund um Heidelberg.
     </p>
   </div>
@@ -1472,8 +1467,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <p><img src="logo2.png" alt="WaldoderWind" style="height:52px; width:auto; mix-blend-mode:multiply; filter:brightness(0) invert(1); opacity:.7; margin-bottom:.4rem;"><br/><strong>waldoderwind</strong></p>
-  <p style="margin-top:.4rem;">Unabhängig · Parteipolitisch nicht gebunden · Nicht von Interessengruppen finanziert<br/>Keine persönlichen Daten · Keine Cookies · Keine Analytics</p>
+  <p>Unabhängig · Parteipolitisch nicht gebunden · Nicht von Interessengruppen finanziert<br/>Keine persönlichen Daten · Keine Cookies · Keine Analytics</p>
   <p style="margin-top:.8rem; opacity:.5;">Stand: Juni 2026 · Alle Angaben nach bestem Wissen aus öffentlichen Quellen · Keine Haftung für Vollständigkeit</p>
   <p style="margin-top:1.2rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,.15); font-size:.75rem; opacity:.55; line-height:1.5;">
     Diese Website ist ein privates, nicht-kommerzielles Informationsangebot zum Bürgerentscheid Heidelberg 12. Juli 2026.
