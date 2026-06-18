@@ -593,12 +593,42 @@
 
     /* ── FOOTER ── */
     footer {
-      background: var(--ink); color: rgba(255,255,255,.5);
-      padding: 2rem 1.5rem; text-align: center;
+      background: var(--ink);
+      padding: 2.8rem 1.5rem 2.2rem;
+      text-align: center;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: .78rem; line-height: 1.8;
     }
-    footer strong { color: rgba(255,255,255,.85); }
+    .footer-principles {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.5);
+      margin-bottom: 1.4rem;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: .3rem .8rem;
+    }
+    .footer-principles span::before {
+      content: '·';
+      margin-right: .8rem;
+      opacity: .4;
+    }
+    .footer-principles span:first-child::before { display: none; }
+    .footer-legal {
+      font-size: .72rem;
+      color: rgba(255,255,255,.28);
+      line-height: 1.9;
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding-top: 1.4rem;
+    }
+    .footer-legal a {
+      color: rgba(255,255,255,.4);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,.15);
+    }
+    .footer-legal a:hover { color: rgba(255,255,255,.7); }
 
     /* ── AMORTISATION ── */
     .amort-section { padding: 3.5rem 0; background: var(--surface); }
@@ -755,11 +785,22 @@
       gap: 3rem;
     }
     .omat-teaser-owl {
-      width: 140px;
+      width: 160px;
       flex-shrink: 0;
-      mix-blend-mode: luminosity;
-      opacity: .92;
-      filter: brightness(1.05);
+      border-radius: 14px;
+      transform: rotate(-4deg);
+      box-shadow:
+        0 2px 0 rgba(255,255,255,.08),
+        0 8px 24px rgba(0,0,0,.35),
+        0 24px 48px rgba(0,0,0,.25);
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .omat-teaser-owl:hover {
+      transform: rotate(-1deg) scale(1.04);
+      box-shadow:
+        0 2px 0 rgba(255,255,255,.08),
+        0 16px 40px rgba(0,0,0,.4),
+        0 32px 56px rgba(0,0,0,.2);
     }
     .omat-teaser-text {
       flex: 1;
@@ -1503,13 +1544,18 @@
 
 <!-- FOOTER -->
 <footer>
-  <p>Unabhängig · Parteipolitisch nicht gebunden · Nicht von Interessengruppen finanziert<br/>Keine persönlichen Daten · Keine Cookies · Keine Analytics</p>
-  <p style="margin-top:.8rem; opacity:.5;">Stand: Juni 2026 · Alle Angaben nach bestem Wissen aus öffentlichen Quellen · Keine Haftung für Vollständigkeit</p>
-  <p style="margin-top:1.2rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,.15); font-size:.75rem; opacity:.55; line-height:1.5;">
-    Diese Website ist ein privates, nicht-kommerzielles Informationsangebot zum Bürgerentscheid Heidelberg 12. Juli 2026.
-    Keine Parteifinanzierung, keine Werbung, keine Nutzerdaten. Kontakt: waldoderwind@proton.me.
-    Inhaltlich Verantwortlicher: Anonym — Angabe aus Gründen des Schutzes vor politischer Einschüchterung.
-  </p>
+  <div class="footer-principles">
+    <span>Unabhängig</span>
+    <span>Parteipolitisch nicht gebunden</span>
+    <span>Nicht von Interessengruppen finanziert</span>
+    <span>Keine Werbung</span>
+    <span>Keine Analytics</span>
+  </div>
+  <div class="footer-legal">
+    Privates Informationsangebot zum Bürgerentscheid Heidelberg · 12. Juli 2026<br>
+    Kontakt: <a href="mailto:waldoderwind@proton.me">waldoderwind@proton.me</a> · Inhaltlich Verantwortlicher: Anonym<br>
+    Stand: Juni 2026 · Alle Angaben nach bestem Wissen aus öffentlichen Quellen · Keine Haftung für Vollständigkeit
+  </div>
 </footer>
 
 
