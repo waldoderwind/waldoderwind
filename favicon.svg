@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Background -->
+  <rect width="32" height="32" rx="7" fill="#2e4d49"/>
+
+  <!-- Wind turbine mast -->
+  <rect x="15.2" y="14" width="1.6" height="12" rx=".8" fill="#9ac4b4"/>
+
+  <!-- Wind turbine blades -->
+  <!-- Blade up -->
+  <path d="M16 14 C15.5 11 14.5 8.5 16 7 C17.5 8.5 16.5 11 16 14Z" fill="#fff" opacity=".95"/>
+  <!-- Blade lower-left -->
+  <path d="M16 14 C13.3 15.2 10.8 15.5 10 14 C11.2 12.2 13.8 12.8 16 14Z" fill="#fff" opacity=".75"/>
+  <!-- Blade lower-right -->
+  <path d="M16 14 C18.7 15.2 21.2 15.5 22 14 C20.8 12.2 18.2 12.8 16 14Z" fill="#fff" opacity=".55"/>
+
+  <!-- Hub -->
+  <circle cx="16" cy="14" r="1.4" fill="#fff"/>
+
+  <!-- Tree (small, left) -->
+  <path d="M8 26 L8 22 L6.5 22 L8 19.5 L9.5 22 L8 22" stroke="#9ac4b4" stroke-width=".8" fill="none" stroke-linejoin="round"/>
+  <path d="M7 24.5 L9 24.5" stroke="#9ac4b4" stroke-width=".6" stroke-linecap="round" opacity=".5"/>
+</svg>
